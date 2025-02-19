@@ -1,0 +1,173 @@
+{% load static %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="banner-container">
+      {% if entry.cover_image.url != '' %}
+      <img class="img-responsive" src=" {{ entry.cover_image.url}}" />
+      {% endif %}
+      <div class="profile-circle shadow">
+        <img
+          class="img-responsive"
+          style=""
+          src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-12">
+    <h5 class="text-center text-black">{{entry.name}}</h5>
+    {% if entry.designation != None %}
+    <p class="text-center text-muted text-capitalize" style="font-size: 12px">
+      {{entry.designation}} {% if entry.company_name != None %} at {{entry.company_name}} {% endif %}
+    </p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-center">
+      <a href="tel:{{entry.personal_number}}" class="text-decoration-none">
+        <i
+          class="fa-solid fa-mobile-screen-button mt-1 text-black"
+          style="font-size: 12px"
+        ></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.personal_number}}</span
+        >
+      </a>
+    </div>
+    {% if entry.office_number != None %}
+    <div class="d-flex justify-content-center">
+      <a href="tel:{{entry.office_number}}" class="text-decoration-none">
+        <i
+          class="fa-regular fa-building mt-1 text-black"
+          style="font-size: 12px"
+        ></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.office_number}}</span
+        >
+      </a>
+    </div>
+    {% endif %} {% if entry.whatsapp_number != None %}
+    <div class="d-flex justify-content-center">
+      <a
+        href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+        class="text-decoration-none"
+        target="_blank"
+      >
+        <i
+          class="fa-brands fa-whatsapp mt-1 text-black"
+          style="font-size: 12px"
+        ></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.whatsapp_number}}</span
+        >
+      </a>
+    </div>
+
+    {% endif %} {% if entry.email != None%}
+
+    <div class="d-flex justify-content-center">
+      <a href="mailto:{{entry.email}}" class="text-decoration-none text-black">
+        <i class="fa-solid fa-envelope mt-1" style="font-size: 12px"></i>
+        <span class="text-muted" style="font-size: 12px">{{entry.email}}</span>
+      </a>
+    </div>
+
+    {% endif %} {% if entry.email2 != None%}
+
+    <div class="d-flex justify-content-center">
+      <a href="mailto:{{entry.email}}" class="text-decoration-none text-black">
+        <i class="fa-solid fa-envelope mt-1" style="font-size: 12px"></i>
+        <span class="text-muted" style="font-size: 12px">{{entry.email2}}</span>
+      </a>
+    </div>
+
+    {% endif %} {% if entry.website != None %}
+    <div class="d-flex justify-content-center">
+      <a
+        href="https://{{entry.website}}"
+        target="_blank"
+        class="text-decoration-none text-black"
+      >
+        <i class="fa-solid fa-globe" style="font-size: 12px"></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.website}}</span
+        >
+      </a>
+    </div>
+    {% endif %} {% if entry.address != None %}
+    <div class="d-flex justify-content-center">
+      <div>
+        <i class="fa-regular fa-address-book" style="font-size: 12px"></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.address}}</span
+        >
+      </div>
+    </div>
+    {% endif %} {% if entry.location != None %}
+    <div class="d-flex justify-content-center">
+      <div>
+        <i class="fa-solid fa-location-dot" style="font-size: 12px"></i>
+        <span class="text-muted" style="font-size: 12px"
+          >{{entry.location}}</span
+        >
+      </div>
+    </div>
+    {% endif %}
+    {% if social_medias %}
+    <div class="d-flex justify-content-center">
+        {% for i in social_medias %}
+        <div class="me-2">
+            {% if i.social_media.name == 'Facebook' %}
+            <a href="{{ i.link }}" target="_blank">
+                <i class="fa-brands fa-facebook-f" style="font-size: 12px; color: black;"></i>
+            </a>
+            {% elif i.social_media.name == 'Instagram' %}
+            <a href="{{ i.link }}" target="_blank">
+                <i class="fa-brands fa-instagram" style="font-size: 12px; color: black;"></i>
+            </a>
+            {% elif i.social_media.name == 'Linkedin' %}
+            <a href="{{ i.link }}" target="_blank">
+              <i class="fa-brands fa-linkedin" style="font-size: 12px; color: black;"></i>
+            </a>
+            {% elif i.social_media.name == 'Twitter' %}
+            <a href="{{ i.link }}" target="_blank">
+              <i class="fa-brands fa-x-twitter" style="font-size: 12px; color: black;"></i>
+            </a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="d-flex justify-content-center">
+      <div
+        class="mt-3 cursor-pointer"
+        data-bs-toggle="modal"
+        data-bs-target="#shareModal"
+      >
+        <span class="font-weight-bold text-muted" style="font-size: 15px"
+          >SHARE CARD</span
+        >
+        <i class="fa-solid fa-square-share-nodes" style="font-size: 15px"></i>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="mt-3 mb-3">
+        <a
+          href="{% url 'getvcard' entry.url_slug %}"
+          class="btn btn-dark leaf-theme-bg"
+          style="border: none"
+        >
+          Save Contact
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

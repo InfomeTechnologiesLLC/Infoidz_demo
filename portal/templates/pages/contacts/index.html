@@ -1,0 +1,434 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>INFOTAG</title>
+    {% include 'includes/portal-header.html' %}
+    <link rel="stylesheet" href="{% static 'css/data-table.css' %}"></link>
+    <link rel="stylesheet/less" type="text/css" href="{% static 'scss/data-table.scss' %}" />
+ 
+  </head>
+  <body>
+
+
+    
+    {% include 'includes/portal-navbar.html' %}
+
+
+    <div class="az-content az-content-dashboard">
+      <div class="container">
+        <div class="az-content-body">
+       
+          
+          <div class="az-content-header-right">
+            <div class="media">
+              <div class="media-body">
+                <label>DATE</label>
+                <h6 id="comman-date">DD-MM-YYYY</h6>
+              </div><!-- media-body -->
+            </div><!-- media -->
+            <div class="media">
+              <div class="media-body">
+                <label>TIME</label>
+                <h6 id="comman-time">00:00 PM</h6>
+              </div><!-- media-body -->
+            </div><!-- media -->
+            <div class="media">
+              <div class="media-body">
+                <label>Section</label>
+                <h6>Contacts</h6>
+              </div><!-- media-body -->
+            </div><!-- media -->
+            <div class="" style=" position: absolute; right: 50px;">
+              <a href="{% url 'portal:contact-entries-add' %}" class="btn btn-primary">Add</a>
+              <a href="{% url 'portal:bulk-upload' %}" class="btn btn-primary">Bulk Upload</a>
+            <button id="export-as-excel"  onclick="ExportToExcel('xlsx')" class="btn btn-secondary">Export</button>
+        
+          </div>
+          </div>
+
+          <div class="row">
+
+<div class="col-md-12">
+  <div class="table-responsive mt-5">
+    
+
+
+ 
+      <table class="table table-bordered analyse-table mg-b-0 rounded-10 overflow-hidden" id="main-entries-table">
+        <thead>
+          <tr>
+            
+          <th style="display: none;"></th>
+          <th class="text-center">Profile</th> 
+          <th class="text-center" id="th-created-at">created at</th>
+            <th id="th-name">Name</th>
+            <th id="th-personal-number">Contact No</th>
+            <th id="th-contact-link">Contact Link</th>
+            <th>Action</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entrie in entries %}
+
+          {% include 'includes/rows/contact-entrie-row.html' %}
+
+          {% endfor %}
+        
+        </tbody>
+      </table>
+
+
+  </div><!-- table-responsive -->
+</div>
+
+
+          </div>
+
+        </div><!-- az-content-body -->
+      </div>
+    </div><!-- az-content -->
+
+   
+
+<!-- Add Modal -->
+<div class="modal" id="add-new-contact-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+
+      <form onsubmit="SubmitNewContact(event)">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Details</h4>
+        <button type="button" class="close form-close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+<div class="col-md-6">
+  <label>Name *</label>
+<input type="text" name="name" class="form-control" required>
+</div>
+<div class="col-md-6">
+  <label>Personal Number *</label>
+<input type="number" name="personal-number" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+  <label>Comapany Name</label>
+<input type="text" name="company-name" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Designation</label>
+<input type="text" name="designation-name" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Office Number</label>
+<input type="number" name="office-number" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Whatsapp Number</label>
+<input type="number" name="whatsapp-number" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>E-Mail</label>
+<input type="email" name="email-id" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Web Site</label>
+<input type="text" name="website" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Location</label>
+<input type="text" name="location" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Address</label>
+<input type="text" name="address" class="form-control" >
+</div>
+<div class="col-md-6">
+  <label>Profile Pic</label>
+<input type="file" name="profile-pic" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Cover Image</label>
+<input type="file" name="cover-image" class="form-control" >
+</div>
+        </div>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary justify-content-center d-flex" >Submit <div class="btn-loader ml-1 d-none"></div></button>
+        <button type="button" class="btn btn-danger form-close" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+
+<div class="modal" id="edit-contact-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+
+      <form onsubmit="SubmitEditContact(event)">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Details <div class="btn-loader ml-1 edit-get-loader d-none"></div></h4>
+        <button type="button" class="close form-close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+<div class="col-md-6">
+  <label>Name *</label>
+<input type="text" name="name" id="edit-name" class="form-control" required>
+</div>
+<div class="col-md-6">
+  <label>Personal Number *</label>
+<input type="number" name="personal-number" id="edit-personal-number" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+  <label>Comapany Name</label>
+<input type="text" name="company-name" id="edit-company-name" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+  <label>Designation</label>
+<input type="text" name="designation-name" id="edit-designation-name" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+  <label>Office Number</label>
+<input type="number" name="office-number" id="edit-office-number" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Whatsapp Number</label>
+<input type="number" name="whatsapp-number" id="edit-whatsapp-number" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>E-Mail</label>
+<input type="email" name="email-id" id="edit-email" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Web Site</label>
+<input type="text" name="website" id="edit-website" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>Location</label>
+<input type="text" name="location" id="edit-location" class="form-control" >
+</div>
+
+<div class="col-md-6">
+  <label>About Me</label>
+<textarea type="text" name="about-me" id="about-me" class="form-control" ></textarea>
+</div>
+
+<div class="col-md-6">
+  <label>Address</label>
+<input type="text" name="address" id="edit-address" class="form-control" >
+</div>
+<div class="col-md-6 ">
+  <label>Profile Pic</label>
+  <div class="row view profile-previw-view">
+ 
+
+    
+    <div class="col-md-12">
+      <img  style="width: 50px; height: 50px;" id="edit-profile-pic-preview-img" src="" alt="">
+    </div>
+    <div class="col-md-5">
+      <p class="text-danger" onclick="edit_remove_btn(this,'edit-inp-profile-pic')" style="outline: 2px;">Remove <i class="typcn typcn-trash"></i> </p>
+   
+    </div>
+    
+    
+  </div>
+  <input type="file" name="profile-pic" id="edit-inp-profile-pic" class="form-control d-none" >
+</div>
+
+<!-- <div class="col-md-6">
+  <label>Company Logo</label>
+
+  <div class="row view cover-previw-view">
+ 
+
+    
+    <div class="col-md-12">
+      <img  style="width: 80px; height: 50px;" id="edit-company-logo-preview-img" src="" alt="">
+    </div>
+    <div class="col-md-5">
+      <p class="text-danger" onclick="edit_remove_btn(this,'edit-inp-company-logo')" style="outline: 2px;">Remove <i class="typcn typcn-trash"></i> </p>
+   
+    </div>
+    
+    
+  </div>
+
+<input type="file" name="company-logo" id="edit-inp-company-logo" class="form-control" >
+</div> -->
+
+<div class="col-md-6">
+  <label>Cover Image</label>
+
+  <div class="row view cover-previw-view">
+ 
+
+    
+    <div class="col-md-12">
+      <img  style="width: 80px; height: 50px;" id="edit-cover-pic-preview-img" src="" alt="">
+    </div>
+    <div class="col-md-5">
+      <p class="text-danger" onclick="edit_remove_btn(this,'edit-inp-cover')" style="outline: 2px;">Remove <i class="typcn typcn-trash"></i> </p>
+   
+    </div>
+    
+    
+  </div>
+
+<input type="file" name="cover-image" id="edit-inp-cover" class="form-control" >
+</div>
+
+
+<div class="col-md-6"></div>
+  <label>Background Image</label>
+
+  <div class="row view background-previw-view">
+ 
+
+    
+    <div class="col-md-12">
+      <img  style="width: 80px; height: 50px;" id="edit-background-pic-preview-img" src="" alt="">
+    </div>
+    <div class="col-md-5">
+      <p class="text-danger" onclick="edit_remove_btn(this,'edit-inp-background')" style="outline: 2px;">Remove <i class="typcn typcn-trash"></i> </p>
+   
+    </div>
+    
+    
+  </div>
+
+<input type="file" name="background-image" id="edit-inp-background" class="form-control" >
+</div>
+        </div>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary justify-content-center d-flex" >Submit <div class="btn-loader ml-1 d-none"></div></button>
+        <button type="button" class="btn btn-danger form-close" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+{% include 'includes/portal-footer.html' %}
+
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+<script src="{% static 'scripts/contact-entries.js' %}"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/xlsx.full.min.js"></script>
+
+<script>
+function ExportToExcel(type, fn, dl) {
+    var myClone = document.getElementById('main-entries-table').cloneNode(true);
+
+    $(myClone).find('thead th:not(#th-created-at, #th-name, #th-personal-number, #th-contact-link)').remove();
+    $(myClone).find('tbody td:not(#created-at, #name, #personal-number, #contact-link)').remove();
+
+    $(myClone).find('#personal-number').each(function () {
+        $(this).text($(this).text().trim().split('\n')[0]);
+    });
+
+    $(myClone).find('#contact-link').each(function () {
+        var link = `${window.location.protocol}//${window.location.host}${$(this).attr('data-link')}`;
+        $(this).text(link);
+    });
+
+    var wb = XLSX.utils.table_to_book(myClone, { sheet: "Sheet1" });
+
+    return dl
+        ? XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' })
+        : XLSX.writeFile(wb, fn || ('Contacts.' + (type || 'xlsx')));
+}
+
+function writeToNfc(urlSlug) {
+    $.ajax({
+        url: "{% url 'portal:write_to_nfc' %}", 
+        method: "POST",
+        data: {
+            link: "https://demo.infoidz.com/app/card/" + urlSlug  
+        },
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}"  
+        },
+        success: function(response) {
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "Link written to NFC card successfully!",
+                confirmButtonColor: "#4caf50"
+            });
+        },
+        error: function(xhr) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error writing link to NFC card: " + (xhr.responseJSON?.error || "Unknown error"),
+                confirmButtonColor: "#f44336"
+            });
+        }
+    }); 
+}
+
+function WriteStatus(event, element, id) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "{% url 'portal:update-write-status' %}",
+        method: "POST",
+        data: {
+            entry_id: id,
+            csrfmiddlewaretoken: "{{ csrf_token }}"  
+        },
+        success: function(response) {
+            if (response.success) {
+                console.log("Status updated successfully!");
+                window.location.href = element.href;
+            } else {
+                alert("Failed to update status.");
+            }
+        },
+        error: function() {
+            alert("Error updating status.");
+        }
+    });
+}
+
+
+</script>
+
+  </body>
+</html>

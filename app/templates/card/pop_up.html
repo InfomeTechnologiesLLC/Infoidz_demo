@@ -1,0 +1,100 @@
+{% load static %}
+
+
+<div id="popupForm" class=" hidden" >
+    <div class="modal-content">
+      <!-- <span class="close-btn" id="closeModalBtn">&times;</span> -->
+  
+  <div style="margin-bottom: 30px;">
+  
+      <h2 class="modal-heading">SUBMIT YOUR DETAILS</h2>
+   
+    </div>
+  
+  
+      <form class="modal-form" id="modal-form" onsubmit="saveDetails(event)">
+  
+          <input type="text" id="name" name="name" class="modal-input" placeholder="Enter Your Name" required>
+  
+          
+          <input type="email" id="email" name="email" class="modal-input" placeholder="Enter Your Email" required>
+  
+          
+          <input type="tel" id="phone" name="phone" class="modal-input" placeholder="Enter Your Phone number" required>
+  
+          <div class="modal-buttons">
+              <button type="submit" class="modal-submit">Submit</button>
+              <button type="button" class="modal-cancel" id="closeModalBtn">Cancel</button>
+          </div>
+      </form>
+  </div>
+  </div>
+  
+  
+  
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      // Show popup after 2-3 seconds
+      setTimeout(function() {
+          $('#overlay').show();
+          $('#popupForm').fadeIn();
+      }, 2000); // Adjust time here (2000ms = 2 seconds)
+    
+      // Close the popup when the close button is clicked
+      $('#closeModalBtn').on('click', function() {
+          $('#overlay').hide();
+          $('#popupForm').fadeOut();
+      });
+    
+      // Handle form submission
+      $('#modal-form').on('submit', function(e) {
+          e.preventDefault(); // Prevent form submission
+    
+          const name = $('#name').val();
+          const phone = $('#phone').val();
+          const email = $('#email').val();
+    
+          if (name && phone && email) {
+              alert('Form submitted successfully!');
+              $('#overlay').hide();
+              $('#popupForm').fadeOut();
+          } else {
+              alert('Please fill all fields.');
+          }
+      });
+    
+      function saveDetails(event) {
+        event.preventDefault(); 
+    
+        let name = document.getElementById('name').value;
+        let email = document.getElementById('email').value;
+        let phone = document.getElementById('phone').value;
+    
+        let formData = {
+          name: name,
+          email: email,
+          phone: phone
+        };
+    
+        $.ajax({
+          url: "{% url 'submit_details' %}",
+          method: "POST",
+          headers: {
+            "X-CSRFToken": "{{ csrf_token }}" 
+          },
+          data: JSON.stringify(formData),
+          contentType: "application/json",
+          success: function(response) {
+            if (response.success) {
+              document.getElementById('popupForm').style.display = 'none'; 
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function(error) {
+            alert("An error occurred while submitting the form.");
+          }
+        });
+      }
+    </script>

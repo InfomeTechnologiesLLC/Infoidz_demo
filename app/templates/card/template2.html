@@ -1,0 +1,131 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{entry.name}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+      .cursor-pointer{
+  cursor: pointer;
+  }
+    .leaf-theme-bg{
+      background-color: #b57c4d;
+    }
+  
+</style>
+
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500&display=swap" rel="stylesheet">
+
+<!-- font awesome kit end -->
+<style>
+body{
+    font-family: 'Cabinet Grotesk', sans-serif !important;
+}
+.card
+{
+  height: auto;
+  width: 300px;
+}
+.img-responsive
+{
+  width: 100%;
+  height: 150px;
+}
+.banner-container {
+  position: relative;
+}
+
+.profile-circle {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+  width: 100px; /* Adjust the width and height as needed */
+  height: 100px;
+  background-color: #fff; /* Add background color or styling as desired */
+  border-radius: 50%; /* To make it a circle */
+  border: 1px solid rgba(0, 0, 0, 0.212);
+}
+.profile-circle img
+{
+  border-radius: 50%;
+   height: 100px;
+}
+/* contact card template2 design start */
+.card-icon
+{
+    display: inline-block;
+    align-items: center;
+    flex: auto;
+
+    padding: 5px;
+    border-radius: 20px;
+}
+.card-icon i 
+{
+
+    color: white;
+    padding: 3px;
+    margin-left: 10px;
+
+}
+.font-size-small
+{
+    font-size: 13px;
+}
+/* contact card template2 design end  */
+</style>
+
+  </head>
+  <body >
+    
+
+
+{% include 'card/includes/template2_content.html' %}
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      var url=window.location.origin+"{% url 'card-page' entry.url_slug %}"
+      console.log(url)
+
+      var screenWidth = window.screen.width;
+      var screenHeight = window.screen.height;
+      var windowWidth = 600; 
+      var windowHeight = 800; 
+
+      var left = (screenWidth - windowWidth) / 2;
+      var top = (screenHeight - windowHeight) / 2;
+
+      $('.share-btn').click(function () {
+        if ($(this).attr('id') == 'share-facebook'){
+          facebook_url='https://www.facebook.com/sharer/sharer.php?u='+url
+
+          window.open(facebook_url,'_blank', 'width=' + windowWidth + ', height=' + windowHeight + ', left=' + left + ', top=' + top)
+        }
+        if ($(this).attr('id') == 'share-twitter'){
+          twitter_url='https://twitter.com/intent/tweet?url='+url
+
+          window.open(twitter_url,'_blank','width=' + windowWidth + ', height=' + windowHeight + ', left=' + left + ', top=' + top)
+        }
+
+        if ($(this).attr('id') == 'share-linkdin'){
+         
+          linkdin_url='https://www.linkedin.com/sharing/share-offsite/?url='+url
+
+          window.open(linkdin_url,'_blank', 'width=' + windowWidth + ', height=' + windowHeight + ', left=' + left + ', top=' + top)
+        }
+
+
+      })
+    </script>
+  
+  </body>
+</html>

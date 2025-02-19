@@ -1,0 +1,121 @@
+{% load static %}
+<div class="d-flex justify-content-center ">
+
+    <div class="row">
+    
+    <div class="col-md-12">
+    
+    <div class="card shadow">
+    <img class="img-fluid" style="height: 250px;" src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}">
+    </div>
+    <div class="contain-bg shadow" >
+    
+    <div class="row mt-4" style="position: absolute;">
+    <div class="col-md-12 p-5">
+    
+    <div class="mt-2 pl-3 text-first">
+    {% if entry.name != None %}
+    <h4 class="selectable" id="3_card_name" style="color: {{styles.3_card_name.textColor}}">{{entry.name}}</h4>
+    {% endif %}
+    {% if entry.designation != None %}
+    <p class="selectable" id="3_card_designation" style="color: {{styles.3_card_designation.textColor}}">{{entry.designation}}</p>
+    {% endif %}
+    {% if entry.company_name != None %}
+    <p class="text-muted font-size-small selectable" id="3_card_company" style="color: {{styles.3_card_company.textColor}}">{{entry.company_name}}</p>
+    {% endif %}
+    </div>
+    
+    <div class="mt-2 pl-3">
+      {% if entry.about_me != None %}
+      <p class="text-muted selectable" id="3_card_about_me" style="font-size: 10px; color: {{styles.3_card_about_me.textColor}}">{{entry.about_me}}</p>
+     {% endif %}
+      </div>
+    
+      <div class="mt-2 pl-3">
+    
+    <div class="icon-round">
+      <i class="bi bi-telephone-fill selectable" id="3_telephone_icon" style="color: {{styles.3_telephone_icon.textColor}}"></i>
+      <i class="bi bi-chat-left-text selectable" id="3_chat_icon" style="color: {{styles.3_chat_icon.textColor}}"></i>
+      {% if entry.personal_number != None %}
+      <span class="selectable" id="3_personal_number" style="color: {{styles.3_personal_number.textColor}}">{{entry.personal_number}}</span>
+      {% endif %}
+    
+    
+    
+    </div>
+    
+      </div>
+    
+      <div class="mt-3 pl-3">
+    
+    
+    
+        <div class="icon-round">
+          <i class="bi bi-geo-alt-fill selectable" id="3_location_icon" style="color: {{styles.3_location_icon.textColor}}"></i>
+          {% if entry.location != None %}
+          <span class="selectable" id="3_location" style="color: {{styles.3_location.textColor}}">{{entry.location}}</span>
+          {% endif %}
+      
+    </div>
+    </div>
+    <div class="mt-3 pl-3">
+    
+        <div class="icon-round">
+          <i class="bi bi-envelope selectable" id="3_envelope_icon" style="color: {{styles.3_envelope_icon.textColor}}"></i>
+          {% if entry.email != None %}
+          <span class="selectable" id="3_email" style="color: {{styles.3_email.textColor}}">{{entry.email}}</span>
+          {% endif %}
+        </div>
+    
+      </div>
+        
+        
+      <div class="mt-2 pl-3">
+      
+        <label>Connect with</label>
+        <div class="social-cnt">
+            <a href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+            class="text-decoration-none"
+            target="_blank"><i class="bi bi-whatsapp"></i></a>
+         {% for i in social_medias %}
+         {% if i.social_media.name == 'Instagram' %}
+         <a href="{{i.link}}"><i class="bi bi-instagram"></i></a>
+         {% endif %}
+         {% if i.social_media.name == 'Threads' %}
+         <a href="{{i.link}}"><i class="bi bi-threads"></i></a>
+         {% endif %}
+         {% if i.social_media.name == 'Facebook' %}
+         <a href="{{i.link}}"><i class="bi bi-facebook"></i></a>
+         {% endif %}
+         {% if i.social_media.name == 'Twitter' %}
+         <a href="{{i.link}}"><i class="bi bi-twitter-x"></i></a>
+         {% endif %}
+        {% endfor %}
+     
+        </div>
+        
+         </div>
+         <div class="d-flex justify-content-center">
+          <div class="mt-3 mb-3" style="background-color: steelblue; border-radius: 0.3rem;">
+            <a
+              href="{% url 'getvcard' entry.url_slug %}"
+              class="btn btn-primary"
+              style="border: none"
+            >
+              Save Contact
+            </a>
+          </div>
+        </div>
+        </div>
+        
+          </div>
+    
+    
+    
+    </div>
+    </div>
+    
+    </div>
+    
+    
+    </div>

@@ -1,0 +1,84 @@
+{% load static %}
+<div id="webcrumbs">
+    <div
+      class="w-[375px] min-h-[667px] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-lg rounded-lg flex flex-col items-center p-4 text-primary-50"
+    >
+      <div
+        class="w-full h-[160px] rounded-t-lg mb-4 shadow-md"
+        style="
+          background-image: url('https://img.freepik.com/free-photo/two-grey-cardboard-papers-corner-blue-backdrop_23-2147878447.jpg');
+          background-size: cover;
+          background-position: center;
+        "
+      ></div>
+      <div class="relative -top-10 mb-4 flex flex-col items-center">
+        <img
+          src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+          alt="profile"
+          class="w-[100px] h-[100px] border-4 border-blue-300 shadow-lg bg-white"
+        />
+        <div class="text-center mt-2">
+            {% if entry.name != None %}
+          <h1 class="font-title text-xl">{{entry.name}}</h1>
+          {% endif %}
+          {% if entry.designation != None %}
+          <p class="text-neutral-100 text-sm">
+           {{entry.designation}}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+      <div
+        class="bg-gradient-to-r from-blue-400 to-blue-500 rounded-md shadow-md p-4 mb-4 w-full text-primary-50"
+      >
+        <ul class="divide-y divide-blue-600">
+          <li class="flex items-center py-2">
+            <span class="material-symbols-outlined text-yellow-300 mr-3"
+              >mail</span
+            >
+            {% if entry.email != None %}
+            <a href="mailto:{{entry.email}}" class="text-decoration-none"><span class="text-sm">{{entry.email}}</span></a>
+            {% endif %}
+          </li>
+          <li class="flex items-center py-2">
+            <span class="material-symbols-outlined text-yellow-300 mr-3"
+              >call</span
+            >
+            {% if entry.personal_number %}
+            <a href="tel:{{entry.personal_number}}" class="text-decoration-none"><span class="text-sm">{{entry.personal_number}}</span></a>
+            {% endif %}
+          </li>
+          <li class="flex items-center py-2">
+            <span class="material-symbols-outlined text-yellow-300 mr-3"
+              >globe</span
+            >
+            {% if entry.website != None %}
+            <a href="{{entry.website}}" target="_blank"><span class="text-sm">{{entry.website}}</span></a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-between items-center w-full px-6 mb-6">
+        {% for i in social_medias %}
+        {% if i.social_media.name == 'Facebook' %}
+        <a href="{{i.link}}" class="text-blue-700 hover:text-blue-500"><i class="fa-brands fa-facebook text-lg"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Twitter' %}
+        <a href="{{i.link}}" class="text-cyan-400 hover:text-cyan-300"><i class="fa-brands fa-twitter text-lg"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Instagram' %}
+        <a href="{{i.link}}" class="text-pink-400 hover:text-pink-300"><i class="fa-brands fa-instagram text-lg"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Linkedin' %}
+        <a href="{{i.link}}" class="text-blue-500 hover:text-blue-400"><i class="fa-brands fa-linkedin text-lg"></i></a>
+        {% endif %}
+        {% endfor %}  
+    </div>
+      <div class="w-full flex justify-center gap-4">
+        <a href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+        class="text-neutral-950 hover:text-primary-600"
+        target="_blank" style="color: black;"><button class="bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 transition text-primary-50 rounded-full w-[150px] h-[50px] flex items-center justify-center shadow-lg">WhatsApp Me</button></a>
+        <a href="{% url 'getvcard' entry.url_slug %}" style="border: none"><button class="bg-gradient-to-r from-blue-300 to-blue-400 hover:from-blue-400 hover:to-blue-500 transition text-primary-50 rounded-full w-[150px] h-[50px] flex items-center justify-center shadow-lg">Add to contact</button></a>
+      </div>
+    </div>
+  </div>

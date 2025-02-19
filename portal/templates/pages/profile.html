@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>User Profile</title>
+    {% include 'includes/portal-header.html' %}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .business-card,
+      .email-signature {
+        background: #f7f7f7;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .business-card img,
+      .email-signature img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .toggle-buttons {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'includes/portal-navbar.html' %}
+
+    <div class="container my-5 profile-container">
+      <div class="row g-4">
+        <!-- Profile Section -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+              <h4 class="mb-0">User Profile</h4>
+            </div>
+            <div class="card-body text-center">
+              <img
+                src="{% if profile.profile_pic %}{{ profile.profile_pic.url }}{% else %}https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png{% endif %}"
+                alt="User Avatar"
+                class="rounded-circle mb-3"
+                style="width: 50%;"
+              />
+              <h5 class="card-title">{{profile.name}}</h5>
+              <p class="text-muted">{{profile.email}}</p>
+              <p>{{profile.personal_number}}</p>
+              <p>{{profile.location}}</p>
+              <a href="#" class="btn btn-primary">Edit Profile</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Card and Email Signature Section -->
+        <div class="col-lg-6">
+          <!-- Toggle Buttons -->
+          <div class="toggle-buttons">
+            <button id="toggle-business-card" class="btn btn-primary">
+              Show Business Card
+            </button>
+            <!-- <button id="toggle-email-signature" class="btn btn-secondary">
+              Show Email Signature
+            </button> -->
+          </div>
+
+          <!-- Business Card -->
+          <div id="business-card" class="business-card">
+            <h5>Business Card</h5>
+            <img
+              src="{% if profile.business_card %}{{ profile.business_card.url }}{% else %}https://images.template.net/429696/Marketing-Manager-Business-Card-Template-edit-online.png{%endif%}"
+              alt="Business Card"
+              class="img-fluid"
+            />
+          </div>
+
+          <!-- Email Signature -->
+          <!-- <div id="email-signature" class="email-signature d-none">
+            <h5>Email Signature</h5>
+            <img
+              src="{% if profile.email_signature %}{{ profile.email_signature.url }}{% else %}https://marketplace.canva.com/EAFqaHt70Lg/1/0/1600w/canva-white-simple-real-estate-business-email-signature-kD1QiAcOHwY.jpg{%endif%}"
+              alt="Email Signature"
+              class="img-fluid"
+            />
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    {% include 'includes/portal-footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // JavaScript for Toggle Functionality
+      document.getElementById("toggle-business-card").addEventListener("click", function () {
+        document.getElementById("business-card").classList.remove("d-none");
+        document.getElementById("email-signature").classList.add("d-none");
+        this.classList.add("btn-primary");
+        this.classList.remove("btn-secondary");
+        document
+          .getElementById("toggle-email-signature")
+          .classList.remove("btn-primary");
+        document
+          .getElementById("toggle-email-signature")
+          .classList.add("btn-secondary");
+      });
+
+      document
+        .getElementById("toggle-email-signature")
+        .addEventListener("click", function () {
+          document.getElementById("email-signature").classList.remove("d-none");
+          document.getElementById("business-card").classList.add("d-none");
+          this.classList.add("btn-primary");
+          this.classList.remove("btn-secondary");
+          document
+            .getElementById("toggle-business-card")
+            .classList.remove("btn-primary");
+          document
+            .getElementById("toggle-business-card")
+            .classList.add("btn-secondary");
+        });
+    </script>
+  </body>
+</html>

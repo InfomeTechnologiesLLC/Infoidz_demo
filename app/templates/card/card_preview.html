@@ -1,0 +1,174 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/favicon_idz.png' %}">
+    <title>Card Preview</title>
+    <style>
+        .highlight {
+            border: 2px solid orange; 
+            border-radius: 5px; 
+            transition: border 0.3s;    
+        }
+        
+    </style>
+</head>
+<body>
+            {% if card_id == 3 or card_id == 5 %}
+            <h2>Customize your card</h2>
+        {% else %}
+            <!-- <h2>Card Preview</h2> -->
+        {% endif %}
+
+        {{ card_html|safe }}
+ 
+    
+
+   
+    <!-- {% if card_id != 1 and card_id != 2 and card_id != 6 and card_id != 7 and card_id != 8 and card_id != 9 and card_id != 10 and card_id != 11 and card_id != 12 and card_id != 13 %}
+    <div class="color-pickers" style="margin-top: 20px; text-align: center;">
+        {% if card_id != 3 and card_id != 5 and card_id != 6 %}
+        <label for="bgColorPicker">Choose a background color:</label>
+        <input type="color" id="bgColorPicker" value="#64cfed"> 
+        {% endif %}
+        
+        <label for="textColorPicker">Choose a text/icon color:</label>
+        <input type="color" id="textColorPicker" value="#000000"> 
+    </div>
+    
+    <div class="changes-btn" style="padding-left: 45%; margin-top: 20px;">
+        <button class="btn btn-success">Apply changes</button>
+    </div>
+    {% endif %} -->
+
+
+    <script>
+        
+let selectedElement = null; 
+let styleData = {};
+const cardId = {{ card_id }};
+
+const preExistingStyles = JSON.parse('{{ styles|escapejs }}');
+for (const elementId in preExistingStyles) {
+    if (preExistingStyles.hasOwnProperty(elementId)) {
+        styleData[elementId] = { ...preExistingStyles[elementId] };  
+    }
+}
+
+function changeColor(e) {
+    const newSelectedElement = e.target;
+
+    if (newSelectedElement.classList.contains('selectable')) {
+        handlePreviousSelection();  
+        selectNewElement(newSelectedElement);
+    }
+}
+
+function handlePreviousSelection() {
+    if (selectedElement) {
+        selectedElement.classList.remove('highlight');
+        
+        const userTextColor = selectedElement.getAttribute('data-user-text-color');
+        if (userTextColor) {
+            selectedElement.style.color = userTextColor;
+        }
+    }
+}
+
+function selectNewElement(newSelectedElement) {
+    newSelectedElement.classList.add('highlight');
+    selectedElement = newSelectedElement;
+
+    const elementId = selectedElement.id;
+    if (!styleData[elementId]) {
+        const currentBackgroundColor = window.getComputedStyle(selectedElement.closest('.card')).backgroundColor;
+        const currentTextColor = selectedElement.getAttribute('data-user-text-color') || window.getComputedStyle(selectedElement).color;
+
+        styleData[elementId] = {
+            backgroundColor: currentBackgroundColor,
+            textColor: currentTextColor
+        };
+    }
+}
+
+function backgroundColorPicker() {
+    if (selectedElement && cardId !== 3 && cardId !== 5 && cardId !== 6) {
+        const chosenColor = document.getElementById('bgColorPicker').value;
+        applyBackgroundColor(chosenColor); 
+    }
+}
+
+function applyBackgroundColor(chosenColor) {
+    const cardElement = selectedElement.closest('.card');
+    
+    if (cardElement) {
+        cardElement.style.backgroundColor = chosenColor;
+
+        const cardElementId = cardElement.id;
+        styleData[cardElementId] = {
+            ...styleData[cardElementId],
+            backgroundColor: chosenColor 
+        };
+    }
+}
+
+function textColorPicker() {
+    if (selectedElement) {
+        const chosenColor = document.getElementById('textColorPicker').value;
+        applyTextColor(chosenColor); 
+    }
+}
+
+function applyTextColor(chosenColor) {
+    const elementId = selectedElement.id;
+
+    selectedElement.style.color = chosenColor;
+    selectedElement.setAttribute('data-user-text-color', chosenColor);
+
+    styleData[elementId] = {
+        ...styleData[elementId], 
+        textColor: chosenColor  
+    };
+}
+
+function saveCardStyles() {
+    const contactId = {{ edit_id }};
+    const csrfToken = '{{ csrf_token }}'; 
+
+    $.ajax({
+        url: '/save-card-styles/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            contact_id: contactId,
+            styles: styleData, 
+        }),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function(data) {
+            window.location.href= '/portal/contact-entries?from=edit-submission-success';
+        },
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {  
+    document.querySelectorAll('.selectable').forEach(element => {
+        element.addEventListener('click', changeColor);
+    });
+
+    if (cardId !== 3 && cardId !== 5 && cardId !== 6) {
+        document.getElementById('bgColorPicker').addEventListener('input', backgroundColorPicker);
+    }
+    document.getElementById('textColorPicker').addEventListener('input', textColorPicker);
+    document.querySelector('.btn-success').addEventListener('click', saveCardStyles);
+});
+
+
+
+
+    </script>
+    
+</body>
+</html>

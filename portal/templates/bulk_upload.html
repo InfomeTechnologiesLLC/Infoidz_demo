@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Infoidz Bulk</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="icon" type="image/x-icon" href="{% static 'img/motn24/motn_svglogo.svg' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/registration-mystyle.css' %}?update=2" >
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
+<link href="https://fonts.cdnfonts.com/css/mont" rel="stylesheet">
+<style>
+
+@font-face {
+      font-family: 'montbold'; /* Give your font a name */
+      src: url("{% static 'font/FontsFree-Net-Mont-Bold.ttf' %}") format('truetype'); /* Specify the path to your .ttf file */
+    }
+    @font-face {
+      font-family: 'AvenirNext'; /* Give your font a name */
+      src: url("{% static 'font/AvenirNext-Heavy-09.ttf' %}") format('truetype'); /* Specify the path to your .ttf file */
+    }
+    body {
+      font-family: 'montbold' !important; /* Apply the custom font to the body or any other element */
+    }
+
+    .error-row-red{
+      background-color: rgb(255, 98, 98);
+    }
+
+</style>
+
+</head>
+<body style=" font-family: 'montbold' !important; ">
+
+  <div class="reg_background-image"></div>
+
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="row justify-content-center">
+
+
+      <div class="col-md-10">
+  
+<div class="card mt-5 mb-5" style="border: 1px solid rgb(53, 135, 190);">
+
+<div class="buildcard-head">
+<h3 class="text-center text-black" style="">
+CONTACT BULK UPLOAD
+</h3>
+</div>
+<hr/>
+<div class="build_form p-2">
+<div class="row">
+
+<div class="col-md-6 mb-5">
+<label>Upload Excel</label>
+<input class="form-control upload-inp-build-bulk" type="file">
+
+</div>
+
+<div class="col-md-6">
+    <label>Kindly use the template attached below</label>
+    <label class="text-primary" style="font-size: 12px; font-weight: 100;">Please follow the same format as specified in the Excel template</label>
+    <br>
+<a href="{% static 'excel/bulk-upload.xlsx' %}">   <button class="btn btn-primary">Download Template</button></a>
+    
+    </div>
+<hr/>
+    <div class="col-md-12">
+
+<table class="table table-bordered" style="height: 200px; overflow: scroll;">
+    <thead>
+        <th>FULL NAME</th>
+        <th>PERSONAL NUMBER</th>
+        <th>EMAIL</th>
+        <th>ADDRESS</th>
+        <th>DESIGNATION</th>
+        <th>OFFICE NUMBER</th>
+        <th>WHATSAPP NUMBER</th>
+        <th>WEBISTE</th>
+        <th>LOCATION</th>
+
+
+    </thead>
+    <tbody id="table-tbody">
+        <tr>
+            <td colspan="7">
+<div style="padding:50px;">
+        <h3 class="text-center text-muted">
+Table is empty
+
+        </h3>
+    </div>
+</td>
+</tr>
+    </tbody>
+
+</table>
+
+    </div>
+
+</div>
+<div class="row" >
+<div class="" >
+<div class="col-md-12">
+<button class="btn btn-success bulk-upload-submit-btn">SUBMIT <div class="spinner-border spinner-border-sm  form-spinner d-none" role="status"></div></button>
+</div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script src="https://unpkg.com/cropperjs/dist/cropper.js"></script>
+  <!-- Bootstrap JS and Popper.js (Optional) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+ 
+ <script>
+
+
+    var list_data;
+    var final_data = [];
+
+    $('.upload-inp-build-bulk').change(function(event) {
+        final_data = [];
+
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const contents = e.target.result;
+            const workbook = XLSX.read(contents, { type: 'binary', cellDates: true });
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            var tr_html = '';
+            list_data = jsonData.slice(1, jsonData.length);
+            console.log(list_data);
+
+            let row_num = 0;
+            list_data.forEach(element => {
+
+                if (element[0] == null || element[6] == "SELECT DESIGNATION") return false;
+
+                row_num++;
+                let row_id = 'bulk-row-' + row_num.toString();
+                final_data.push({
+                    'full-name': element[0],
+                    'personal-number': element[1],
+                    'email': element[2],
+                    'address': element[3],
+                    'designation': element[4], 
+                    'office-number': element[5],
+                    'whatsapp-number': element[6],
+                    'website': element[7],
+                    'location':element[8],
+                });
+
+                tr_html += getTableRow(element);
+            });
+
+            $('#table-tbody').html(tr_html);
+        };
+
+        reader.readAsBinaryString(file);
+    });
+
+    function getTableRow(element) {
+        let full_name = element[0] !== undefined ? element[0] : '';
+        let personal_number = element[1] !== undefined ? element[1] : '';
+        let email = element[2] !== undefined ? element[2] : '';
+        let address = element[3] !== undefined ? element[3] : '';
+        let designation = element[4] !== undefined ? element[4] : ''; 
+        let office_number = element[5] !== undefined ? element[5] : '';
+        let whatsapp_number = element[6] !== undefined ? element[6] : '';
+        let website = element[7] != undefined ? element[7] : '';
+        let location = element[8] != undefined ? element[8] : '';
+        
+        let tr = `
+          <tr>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;"><div style="width:100px;">${full_name}</div></td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${personal_number}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;"> <div style="width:100px;">${email} </div></td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${address}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;" >${designation}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${office_number}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${whatsapp_number}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${website}</td>
+            <td style="font-size:13px; font-weight:none; font-family: 'Mont', sans-serif;">${location}</td>
+          </tr>
+        `;
+        return tr;
+    }
+
+    $('.bulk-upload-submit-btn').click(async function() {
+        if (final_data.length === 0) {
+            alert('Uploaded excel is empty');
+            return false;
+        }
+
+        $(this).attr('disabled', true);
+        $('.form-spinner').removeClass('d-none');
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'portal:build_excel_bulk_upload' %}",
+            data: { 'final_data': JSON.stringify(final_data), 'csrfmiddlewaretoken': '{{csrf_token}}' },
+            dataType: "json",
+            success: function(response) {
+                $('.bulk-upload-submit-btn').attr('disabled', false);
+                $('.form-spinner').addClass('d-none');
+                if (response.success) {
+                    window.location.href = "{% url 'portal:contact-entries' %}";
+                } else {
+                    response.error_rows_ids.forEach(row_id => {
+                        $('#' + row_id).addClass('error-row-red');
+                    });
+                    alert(`${response.error_rows_ids.length} Row missing or not valid data. Please edit and re-upload the Excel file.`);
+                }
+            }
+        });
+    });
+
+
+  </script>
+
+  
+</body>
+</html>

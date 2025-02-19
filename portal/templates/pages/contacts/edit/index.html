@@ -1,0 +1,497 @@
+
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CONTACTS EDIT</title>
+    {% include 'includes/portal-header.html' %}
+    <link rel="stylesheet" href="{% static 'css/data-table.css' %}"></link>
+    <link rel="stylesheet/less" type="text/css" href="{% static 'scss/data-table.scss' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+
+    
+    {% include 'includes/portal-navbar.html' %}
+
+    <div class="container ">
+
+      <a class="d-flex mt-4 align-items-center text-primary go-back" href="{% url 'portal:contact-entries' %}">
+        <i class="fa-solid fa-chevron-left back-icon"></i>
+        <span class="ml-1">Go Back</span>    
+      </a>
+    <form action="" onsubmit="SubmitEditContact(event)" edit-id="{{entry.id}}">
+      {% csrf_token %}
+      <div class=" form-group card p-2 my-4 shadow-2 border rounded-2">
+      <div class="mt-2">
+          <div class="border-bottom">
+  
+            <h4 class="my-2">Contact Edit</h4>
+  
+          </div>
+      </div>
+        <div class="row">
+
+    
+      <div class="col-md-3 mt-2">
+        <label for="">Full Name <i class="text-danger">*</i></label>
+        <input type="text" name="name" value="{{entry.name}}" class="form-control" required>
+
+      </div>
+      <div class="col-md-3 mt-2">
+        <label for="">Personal Number <i class="text-danger">*</i></label>
+        <input type="text" name="personal-number" value="{{entry.personal_number|default_if_none:''}}" class="form-control" required>
+
+      </div>
+      <div class="col-md-3 mt-2">
+        <label>E-Mail</label>
+      <input type="email" name="email-id" class="form-control" value="{{entry.email|default_if_none:''}}" >
+      </div>
+      <!-- <div class="col-md-3 mt-2">
+        <label>E-Mail 2</label>
+      <input type="email" name="email-id-2" class="form-control" value="{{entry.email2|default_if_none:''}}" >
+      </div> -->
+      <div class="col-md-3 mt-2">
+        <label for="">Address</label>
+        <input type="text" name="address" value="{{entry.address|default_if_none:''}}" class="form-control">
+
+      </div>
+      
+      
+      <div class="col-md-3 mt-2">
+        <label>Designation</label>
+      <input type="text" name="designation-name" value="{{entry.designation|default_if_none:''}}" class="form-control" >
+      </div>
+      
+      <div class="col-md-3 mt-2">
+        <label>Office Number</label>
+      <input type="text" name="office-number" value="{{entry.office_number|default_if_none:''}}" class="form-control" >
+      </div>
+      
+      <div class="col-md-3 mt-2">
+        <label>Whatsapp Number</label>
+      <input type="text" name="whatsapp-number" value="{{entry.whatsapp_number|default_if_none:''}}" class="form-control" >
+      </div>
+      
+      
+      
+      <div class="col-md-3 mt-2">
+        <label>WebSite</label>
+      <input type="text" name="website" value="{{entry.website|default_if_none:''}}" class="form-control" >
+      </div>
+      
+      <div class="col-md-3 mt-2">
+        <label>Location</label>
+      <input type="text" name="location" value="{{entry.location|default_if_none:''}}" class="form-control" >
+      </div>
+
+      <!-- <div class="col-md-3 mt-2">
+        <label>About Me</label>
+        <textarea type="text" name="about-me" class="form-control" id="aboutMe" maxlength="150" oninput="countCharacters(this)">{{entry.about_me|default_if_none:''}}</textarea>
+        <small id="charCount">150 characters remaining</small>
+      </div> -->
+      
+      <!-- <div class="col-md-3 mt-2">
+        <label>Address</label>
+      <input type="text" name="address" class="form-control" value="{{entry.address|default_if_none:''}}" >
+      </div> -->
+      <div class="col-md-3 mt-2">
+        <label>Profile Pic</label>
+        
+        <!-- Existing profile pic if available -->
+        {% if entry.profile_pic %}
+        <div class="form-control edit-file-inp-view">
+            <div class="row justify-content-center align-items-center d-flex">
+                <img class="col-2 img-fluid" src="{{ entry.profile_pic.url }}" style="width: 22px; height: 20px;" alt="">
+                <a href="{{ entry.profile_pic.url }}" target="_blank" class="col-8 text-truncate">{{ entry.profile_pic|filename }}</a>
+                <div class="text-center col-1 mr-1 cursor-pointer cursor-pointer-with-scale" onclick="edit_remove_btn(this,'profile-pic')">
+                    <i class="fa-solid fa-circle-xmark text-danger"></i>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <input type="file" id="profile-pic-input" name="profile-pic" class="form-control {% if entry.profile_pic %} d-none {% endif %}" accept="image/*">
+        
+        <div class="profile-preview-container mt-2" style="display: none; text-align: center;">
+            <img id="profile-pic-preview" style="max-width: 100%; max-height: 200px; margin-top: 10px;">
+            <div class="button-container mt-2">
+                <button type="button" id="profile-crop-button" class="btn btn-success btn-sm">
+                    <i class="bi bi-check-circle"></i> Crop
+                </button>
+                <button type="button" id="profile-reset-button" class="btn btn-danger btn-sm">
+                    <i class="bi bi-x-circle"></i> Delete
+                </button>
+            </div>
+        </div>
+    
+        <input type="hidden" id="profile-cropped-image-data" name="cropped-profile-pic">
+        
+        <small class="text-danger font-size-small">Size does not exceed 3 Mb</small>
+    </div>
+    
+    <div class="col-md-3 mt-2" id="business-card-container">
+        <label>Business Card</label>
+        {% if entry.business_card %}
+        <div class="form-control edit-file-inp-view">
+            <div class="row justify-content-center align-items-center d-flex">
+                <img class="col-2 img-fluid" src="{{entry.business_card.url}}" style="width: 20px; height: 20px;" alt="">
+                <a href="{{entry.business_card.url}}" target="_blank" class="col-8 text-truncate">{{entry.business_card|filename}}</a>
+                <div class="text-center col-1 mr-1 cursor-pointer-with-scale" onclick="edit_remove_btn(this, 'business-card')">
+                    <i class="fa-solid fa-circle-xmark text-danger"></i>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <input type="file" name="business-card" id="business-card" class="form-control {% if entry.business_card %} d-none {% endif %}" accept="image/*">
+    </div>
+
+
+      <!-- <div class="col-md-3 mt-2" id="company-logo-container">
+        <label>Company Logo</label>
+        {% if entry.company_logo %}
+        <div class="form-control edit-file-inp-view">
+            <div class="row justify-content-center align-items-center d-flex">
+                <img class="col-2 img-fluid" src="{{entry.company_logo.url}}" style="width: 20px; height: 20px;" alt="">
+                <a href="{{entry.company_logo.url}}" target="_blank" class="col-8 text-truncate">{{entry.company_logo|filename}}</a>
+                <div class="text-center col-1 mr-1 cursor-pointer-with-scale" onclick="edit_remove_btn(this, 'company-logo')">
+                    <i class="fa-solid fa-circle-xmark text-danger"></i>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <input type="file" name="company-logo" class="form-control {% if entry.company_logo %} d-none {% endif %}" accept="image/*">
+    </div> -->
+      
+      <!-- <div class="col-md-3 mt-2">
+        <label>Cover Image Or Company Logo</label>
+      {% if entry.cover_image %}
+      <div class="form-control edit-file-inp-view" >
+        <div class="row justify-content-center align-items-center d-flex">
+          <img class="col-2 img-fluid" src="{{entry.cover_image.url}}" style="width: 20px; height: 20px;" alt="">
+          <a href="{{entry.cover_image.url}}" target="_blank" class="col-8 text-truncate">{{entry.cover_image |filename}}</a>
+          <div class="text-center col-1 mr-1 cursor-pointer-with-scale" onclick="edit_remove_btn(this,'cover-image')">  <i  class="fa-solid fa-circle-xmark text-danger  "></i></div>
+        
+        </div>
+      
+      </div>
+      
+      {% endif %}
+
+      <input type="file" name="cover-image" class="form-control {% if entry.cover_image %} d-none {% endif %}" accept="image/*">
+
+   
+      </div> -->
+
+      <!-- <div class="col-md-3 mt-2" id="background-image-container" {% if not entry.background_image and entry.card.id != 1 %} style="display: none;" {% endif %}>
+        <label>Background Image</label>
+        {% if entry.background_image %}
+        <div class="form-control edit-file-inp-view">
+            <div class="row justify-content-center align-items-center d-flex">
+                <img class="col-2 img-fluid" src="{{entry.background_image.url}}" style="width: 20px; height: 20px;" alt="">
+                <a href="{{entry.background_image.url}}" target="_blank" class="col-8 text-truncate">{{entry.background_image|filename}}</a>
+                <div class="text-center col-1 mr-1 cursor-pointer-with-scale" onclick="edit_remove_btn(this, 'background-image')">
+                    <i class="fa-solid fa-circle-xmark text-danger"></i>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <input type="file" name="background-image" class="form-control {% if entry.background_image %} d-none {% endif %}" accept="image/*">
+    </div> -->
+
+      <!-- <div class="col-md-3 mt-2 ">
+        <label class="justify-content-between d-flex">Social Medias <div class="text-primary cursor-pointer-with-scale" data-toggle="modal" data-target="#add-social-link-modal"><i class="fa-regular fa-square-plus mr-1"> </i>Add Link</div> </label>
+
+        <div id="social-medias-links">
+          
+          <p class="text-muted text-center mt-2">No links added</p>
+
+        </div>
+          
+      
+      </div>
+ -->
+
+     
+   
+      
+      </div>
+      <div class="mt-3">
+        <label for="">Card Styles</label>
+       <div class=" border-top">
+        
+         
+         <div class=" mt-2 col-md-8 col-sm-12 d-flex  align-items-center jus">
+           {% for c in cards %}
+           <div class="col-md-2 col-sm-12 text-center template-style mr-1 p-1 {% if entry.card.id == c.id %} active {% endif %}" style="height: 150px;" card-id="{{c.id}}">
+             <img src="{{c.temp_image.url}}"  class="text-center" style="width: 80px; height: 120px;" alt="">
+             
+             <p class="text-center">{{c.name}}</p>
+             
+           </div>
+           
+           {% endfor %} 
+         </div>
+
+         </div>
+
+       </div>
+    </div>
+    
+    <div id="card-preview-container" class="mt-3"></div>
+    
+    
+      <div class="mt-2">
+        <div class=" border-top">
+
+          <button class="form-control col-md-2 btn btn-success float-right my-2">Submit <div class="btn-loader ml-1 d-none"></div></button>
+
+        </div>
+    </div>
+      </div>
+    </form>
+    </div>
+
+    <div class="modal fade" id="add-social-link-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fs-1" id="exampleModalLabel">Add Social Link</h5>
+            
+          </div>
+          <div class="modal-body">
+           
+            <div class="row">
+              <select name="" class="form-control col-3" id="add-social-media-select">
+                {% for s in social_medias %}
+                <option value="{{s.id}}" s-icon="{{s.icon}}">{{s.name}}</option>
+                {% endfor %}
+              </select>
+             <input type="text" class="form-control col-9" name="" id="add-social-media-link">
+            </div>
+          </div>
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-primary " id="add-social-link-save" >Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% include 'includes/portal-footer.html' %}
+
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+<script src="{% static 'scripts/contact-entries.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>  <!-- Cropper.js -->
+<script>
+
+var social_medias_array=JSON.parse('{{social_medias_link_dump|safe}}')
+renderSocialLinks(social_medias_array)
+
+
+$(document).ready(function () {
+    var selectedCardId = $('.template-style.active').attr('card-id');
+    toggleBackgroundImageContainer(selectedCardId);
+
+    $('.template-style').on('click', function () {
+        var selectedCardId = $(this).attr('card-id');
+
+        $('.template-style').removeClass('active');
+        $(this).addClass('active');
+
+        toggleBackgroundImageContainer(selectedCardId);
+    });
+
+    function toggleBackgroundImageContainer(selectedCardId) {
+        if (selectedCardId == '1') {
+            $('#background-image-container').show();
+        } else {
+            $('#background-image-container').hide();
+        }
+    }
+});
+
+
+
+
+function countCharacters(textarea) {
+    const maxLength = textarea.maxLength;
+    const currentLength = textarea.value.length;
+    const remainingChars = maxLength - currentLength;
+
+    document.getElementById('charCount').textContent = remainingChars + " characters remaining";
+}
+
+
+function edit_remove_btn(elm, name) {
+    const editId = $('form').attr('edit-id');
+    $(elm).closest('.edit-file-inp-view').addClass('d-none');
+    $(`[name=${name}]`).removeClass('d-none');
+
+    $.ajax({
+        url: "{% url 'portal:delete_file' %}", 
+        type: 'POST',
+        data: {
+            entry_id: editId,
+            file_type: name,
+            csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val() 
+        },
+        success: function(response) {
+        },
+        error: function(xhr, status, error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Request Failed',
+                text: xhr.responseJSON?.message || 'An error occurred while deleting the file.',
+            });
+        }
+    });
+}
+
+
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const imageInput = document.getElementById('image-input');
+      const imagePreview = document.getElementById('image-preview');
+      const cropButton = document.getElementById('crop-button');
+      const resetButton = document.getElementById('reset-button');
+      const previewContainer = document.querySelector('.preview-container');
+      const croppedImageData = document.getElementById('cropped-image-data');
+      let cropper;
+
+      // Initialize Cropper.js on a new image
+      function initializeCropper(imageSrc) {
+          if (cropper) {
+              cropper.destroy(); // Destroy the old cropper instance
+          }
+          imagePreview.src = imageSrc;
+          previewContainer.style.display = 'block'; // Show the preview container
+          cropper = new Cropper(imagePreview, {
+              aspectRatio: 1, // Set aspect ratio (1:1 for square)
+              viewMode: 2,
+              autoCropArea: 1,
+          });
+      }
+
+      // Handle new image upload
+      imageInput.addEventListener('change', function (event) {
+          const file = event.target.files[0];
+          if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                  initializeCropper(e.target.result); // Initialize cropper with uploaded image
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+
+      // Crop the image and store the result
+      cropButton.addEventListener('click', function () {
+          if (cropper) {
+              const canvas = cropper.getCroppedCanvas({
+                  width: 300, // Output width
+                  height: 300, // Output height
+              });
+
+              // Convert canvas to a data URL
+              const croppedDataUrl = canvas.toDataURL('image/png');
+              croppedImageData.value = croppedDataUrl; // Store the cropped image in hidden input
+
+              // Display the cropped image in preview
+              cropper.destroy(); // Remove cropper instance
+              imagePreview.src = croppedDataUrl; // Show the cropped image
+          }
+      });
+
+      // Reset everything to allow a new image upload
+      resetButton.addEventListener('click', function () {
+          if (cropper) {
+              cropper.destroy(); // Destroy cropper instance
+          }
+          previewContainer.style.display = 'none'; // Hide the preview container
+          imagePreview.src = ''; // Clear the image preview
+          imageInput.value = ''; // Clear the file input
+          croppedImageData.value = ''; // Clear the hidden input
+      });
+  });
+</script>
+
+<!-- profile image cropping section -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const profilePicInput = document.getElementById('profile-pic-input');
+      const profilePicPreview = document.getElementById('profile-pic-preview');
+      const profileCropButton = document.getElementById('profile-crop-button');
+      const profileResetButton = document.getElementById('profile-reset-button');
+      const profilePreviewContainer = document.querySelector('.profile-preview-container');
+      const profileCroppedImageData = document.getElementById('profile-cropped-image-data');
+      let profileCropper;
+
+      // Initialize Cropper.js on a new image
+      function initializeProfileCropper(imageSrc) {
+          if (profileCropper) {
+              profileCropper.destroy(); // Destroy the old cropper instance
+          }
+          profilePicPreview.src = imageSrc;
+          profilePreviewContainer.style.display = 'block'; // Show the preview container
+          profileCropper = new Cropper(profilePicPreview, {
+              aspectRatio: 1, // Set aspect ratio (1:1 for square)
+              viewMode: 2,
+              autoCropArea: 1,
+          });
+      }
+
+      // Handle new profile pic upload
+      profilePicInput.addEventListener('change', function (event) {
+          const file = event.target.files[0];
+          if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                  initializeProfileCropper(e.target.result); // Initialize cropper with uploaded image
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+
+      // Crop the image and store the result
+      profileCropButton.addEventListener('click', function () {
+          if (profileCropper) {
+              const canvas = profileCropper.getCroppedCanvas({
+                  width: 300, // Output width
+                  height: 300, // Output height
+              });
+
+              // Convert canvas to a data URL
+              const croppedDataUrl = canvas.toDataURL('image/png');
+              profileCroppedImageData.value = croppedDataUrl; // Store the cropped image in hidden input
+
+              // Display the cropped image in preview
+              profileCropper.destroy(); // Remove cropper instance
+              profilePicPreview.src = croppedDataUrl; // Show the cropped image
+          }
+      });
+
+      // Reset everything to allow a new profile pic upload
+      profileResetButton.addEventListener('click', function () {
+          if (profileCropper) {
+              profileCropper.destroy(); // Destroy cropper instance
+          }
+          profilePreviewContainer.style.display = 'none'; // Hide the preview container
+          profilePicPreview.src = ''; // Clear the image preview
+          profilePicInput.value = ''; // Clear the file input
+          profileCroppedImageData.value = ''; // Clear the hidden input
+      });
+  });
+</script>
+
+  </body>
+</html>

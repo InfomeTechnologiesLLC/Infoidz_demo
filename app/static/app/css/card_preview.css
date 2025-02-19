@@ -1,0 +1,145 @@
+/* popup style */
+
+           /* Style for the popup */
+           #popupForm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 53%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+      
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+
+/* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 30px;
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Heading */
+.modal-heading {
+   
+    color: #3e6be9;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Form Labels and Inputs */
+.modal-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+  
+    background-color: #d3d3d3;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Buttons */
+.modal-buttons {
+margin-top: 10px;
+}
+
+.modal-submit, .modal-cancel {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.modal-submit {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+}
+
+.modal-cancel {
+    background-color: #FF5733;
+    color: white;
+    border: none;
+}
+
+/* Hover Effects */
+.modal-submit:hover {
+    background-color: #0056b3;
+}
+
+.modal-cancel:hover {
+    background-color: #cc3d2c;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 80%;
+    }
+}
+/* end popup  */
+
+@media screen and (min-width: 200px) and (max-width: 450px) {
+    #popupForm {
+   
+        left: 60%;
+
+    }
+    
+}
+
+@media screen and (min-width: 451px) and (max-width: 768px) {
+    #popupForm {
+   
+        left: 55%;
+        
+    }
+    
+}

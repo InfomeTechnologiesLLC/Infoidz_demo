@@ -1,0 +1,109 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{entry.name}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+      .cursor-pointer{
+  cursor: pointer;
+}
+    </style><!-- font awesome kit start -->
+
+<script src="https://kit.fontawesome.com/083cf0a312.js" crossorigin="anonymous"></script>
+
+<!-- font awesome kit end -->
+<style>
+.card
+{
+  height: auto;
+  width: 300px;
+}
+.img-responsive
+{
+  width: 100%;
+  height: 150px;
+}
+.banner-container {
+  position: relative;
+}
+
+.profile-circle {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+  width: 100px; /* Adjust the width and height as needed */
+  height: 100px;
+  background-color: #fff; /* Add background color or styling as desired */
+  border-radius: 50%; /* To make it a circle */
+  border: 1px solid rgba(0, 0, 0, 0.212);
+}
+.profile-circle img
+{
+  border-radius: 50%;
+   height: 100px;
+}
+
+</style>
+
+  </head>
+  <body>
+    
+
+<div class="mt-5 mb-5 ">
+  <div class="d-flex justify-content-center">
+   
+    <div class="card p-2 row">
+      <div class="col-12 justify-content-center d-flex">
+        <img style="height: 100%; width: 100%;" src="	https://img.freepik.com/free-vector/404-error-with-portals-concept-illustration_114360-7970.jpg" alt="">
+      
+      </div>
+      <div class="col-12">
+        <p class="text-center">Sorry, card is not found </p>
+      </div>
+      
+     
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- social media share modal start here -->
+
+  <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">Share Card via Social Media</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- Add your social media icons and sharing functionality here -->
+                <i class="fab fa-facebook fa-2x mx-2 share-btn cursor-pointer" id="share-facebook" ></i>
+                <i class="fab fa-twitter fa-2x mx-2 share-btn cursor-pointer" id="share-twitter"></i>
+                <i class="fab fa-linkedin fa-2x mx-2 share-btn cursor-pointer" id="share-linkdin"></i>
+                <!-- Add more icons as needed -->
+
+                <p class="mt-3">Click on the icons to share the card</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- social media share modal end here -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  
+  </body>
+</html>

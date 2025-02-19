@@ -1,0 +1,154 @@
+{% load static %}
+<div class="">
+    <div class="d-flex justify-content-center" >
+    
+    <div class="row">
+    <div class="col-md-4 col-12">
+    
+        <div class="card ">
+            <div class="col-md-12 position-relative" >
+                <img class="img-fluid" src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}" alt="Person Image">
+                
+                <div class="overlay-text">
+                {% if entry.name != None %}
+                  <h5 class="selectable" id="1_card_name" style="color: {{styles.1_card_name.textColor}}">{{entry.name}}</h5>
+                {% endif %}
+
+                {% if entry.designation != None %}
+                <p class="selectable" id="card_designation" style="color: {{styles.card_designation.textColor}}">{{entry.designation}}</p>
+                {% endif %}
+                </div>
+              </div>
+    
+    
+    
+    <div class="col-md-12 mt-3 ">
+    
+    <div class="row">
+    
+    <div class="col-cont col-md-6" style="">
+    <div style="padding-left: 10px;  padding-right: 10px; padding-top: 10px; ">
+        <div class="text-center" style="color: black; font-weight: bold;">
+        <i class="bi bi-pin-map selectable" id="1_location_icon" style="color: {{styles.1_location_icon.textColor}}"></i>
+    </div>
+    {% if entry.location != None %}
+        <p class="text-center selectable" id="1_location" style="font-size: 12px; color: {{styles.1_location.textColor}}">{{entry.location}}</p>
+        {% endif %}
+    </div>
+    
+    </div>
+    
+    <div class="col-cont col-md-6">
+    <div class="text-number" style="padding-top: 10px; padding-left: 10px;  padding-right: 10px;">
+        <div class="text-center" style="color: black; font-weight: bold;">
+        <i class="bi bi-phone selectable"></i>
+    </div>
+      {% if entry.personal_number != None %}
+        <p class="selectable" id="mobile_label" style="color: {{styles.mobile_label.textColor}}">Mobile Number</p>
+        <p class="selectable" id="1_personal_number" style="color: {{styles.1_personal_number.textColor}}">{{entry.personal_number}}</p>
+        {% endif %}
+        
+    </div>
+    
+    </div>
+    
+    <div class="col-cont col-md-6">
+        <div class="text-number" style="padding-top: 10px; padding-left: 10px;  padding-right: 10px;">
+            <div class="text-center" style="color: black; font-weight: bold; ">
+                <i class="bi bi-envelope selectable" id="envelope" style="color: {{styles.envelope.textColor}}"></i>
+    
+        </div>
+            {% if entry.email != None %}
+            <p class="selectable" id="email_label" style="color: {{styles.email_label.textColor}}">Email Address</p>
+            <p class="selectable" id="1_email" style="color: {{styles.1_email.textColor}}">{{entry.email}}</p>
+            {% endif %}
+            
+            
+        </div>
+        
+        </div>
+    
+        <div class="col-cont col-md-6">
+            <div class="text-number" style="padding-top: 10px; padding-left: 10px;  padding-right: 10px;">
+                <div class="text-center" style="color: black; font-weight: bold;">
+                    <i class="bi bi-globe selectable" id="website_icon" style="color: {{styles.website_icon.textColor}}"></i>
+        
+            </div>
+            {% if entry.website != None %}
+                <p class="selectable" id="website_label" style="color: {{styles.website_label.textColor}}">Website</p>
+                <p class="selectable" id="website" style="color: {{styles.website.textColor}}">{{entry.website}}</p>
+            {% endif %}
+            </div>
+            
+            </div>
+    
+    </div>
+    
+    
+    <div class="row">
+    <div class="col-md-12">
+    <div class="d-flex justify-content-center">
+    <div class="mt-3 cnt">
+        Connet With Me
+    </div>
+    
+    
+    
+    
+    
+    </div>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="text-center icon-connect mt-2">
+            
+        <a href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+            class="text-decoration-none"
+            target="_blank" style="color: black;"><i class="bi bi-whatsapp">
+            </i></a>
+            {% for i in social_medias %}
+            {% if i.social_media.name == 'Facebook'%}
+            <a href="{{i.link}}" style="color: black;"><i class="bi bi-facebook"></i></a>
+            {% endif %}
+            {% if i.social_media_name == 'Instagram' %}
+            <a href="{{i.link}}" style="color: black;"><i class="bi bi-instagram"></i></a>
+            {% endif %}
+            {% if i.social_media.name == 'Twitter' %}
+            <a href="{{i.link}}" style="color: black;"><i class="bi bi-twitter-x"></i></a>
+            {% endif %}
+            {% if entry.social_media.name == 'Linkedin' %}
+            <a href="{{i.link}}" style="color: black;"><i class="bi bi-linkedin"></i></a>
+            {% endif %}
+            {% endfor %}    
+
+        </div>
+    </div>
+    </div>
+    
+    <div class="d-flex justify-content-center">
+        <div class="mt-3 mb-3" style="background-color: steelblue; border-radius: 0.3rem;">
+          <a
+            href="{% url 'getvcard' entry.url_slug %}"
+            class="btn"
+            style="border: none"
+          >
+            Save Contact
+          </a>
+        </div>
+      </div>
+    
+    
+    </div>
+    
+
+    </div>
+    
+    
+    </div>
+    
+    </div>
+    
+    
+    
+    </div>
+    </div>

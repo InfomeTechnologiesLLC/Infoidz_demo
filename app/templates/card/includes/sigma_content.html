@@ -1,0 +1,101 @@
+{% load static %}
+<div id="webcrumbs">
+    <div class="w-[400px] bg-gray-100 shadow-xl rounded-lg overflow-hidden">
+      <div
+        class="relative flex flex-col items-center p-6 bg-primary-500 text-primary-50"
+      >
+        <img
+          src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+          alt="Profile"
+          class="w-[100px] h-[100px] rounded-full border-4 border-primary-50 shadow-lg"
+        />
+        {% if entry.name != None %}
+        <h1 class="text-xl font-title font-bold mt-4">{{entry.name}}</h1>
+        {% endif %}
+      </div>
+      <div class="px-6 py-4">
+        <div
+          class="grid grid-cols-7 items-center text-sm text-neutral-950 mb-3"
+        >
+          <span class="col-span-2 font-semibold">Role</span>
+          {% if entry.designation != None %}
+          <span class="col-span-5 text-neutral-600">{{entry.designation}}</span>
+          {% endif %}
+        </div>
+        <div
+          class="grid grid-cols-7 items-center text-sm text-neutral-950 mb-3"
+        >
+          <span class="col-span-2 font-semibold">Email</span>
+          {% if entry.email != None %}
+          <a href="mailto:{{entry.email}}" class="text-decoration-none"><span class="col-span-5 text-neutral-600"
+            >{{entry.email}}</span></a>
+          {% endif %}
+        </div>
+        <div
+          class="grid grid-cols-7 items-center text-sm text-neutral-950 mb-3"
+        >
+          <span class="col-span-2 font-semibold">Phone</span>
+          {% if entry.personal_number != None %}
+          <a href="tel:{{entry.personal_number}}" class="text-decoration-none"><span class="col-span-5 text-neutral-600">{{entry.personal_number}}</span></a>
+          {% endif %}
+        </div>
+        <div
+          class="grid grid-cols-7 items-center text-sm text-neutral-950 mb-3"
+        >
+          <span class="col-span-2 font-semibold">Location</span>
+          {% if entry.location %}
+          <span class="col-span-5 text-neutral-600">{{entry.location}}</span>
+          {% endif %}
+        </div>
+        <div
+          class="grid grid-cols-7 items-center text-sm text-neutral-950 mb-3"
+        >
+          <span class="col-span-2 font-semibold">Website</span>
+          {% if entry.website != None %}
+          <a href="{{entry.website}}" target="_blank"><span class="col-span-5 text-neutral-600"
+            >{{entry.website}}</span></a>
+          {% endif %}
+        </div>
+        <!-- <div class="grid grid-cols-7 items-start text-sm text-neutral-950">
+          <span class="col-span-2 font-semibold">Description</span>
+          {% if entry.about_me != None %}
+          <p class="col-span-5 text-neutral-600">
+           {{entry.about_me}}
+          </p>
+          {% endif %}
+        </div> -->
+      </div>
+      <div class="p-6">
+        <a
+        href="{% url 'getvcard' entry.url_slug %}"
+        
+        style="border: none"><span class="flex items-center justify-center gap-2"><button
+          class="w-full bg-primary-500 hover:bg-primary-600 text-primary-50 py-3 rounded-md font-semibold transition-all"
+        >
+          <span class="flex items-center justify-center gap-2"
+            >Add to Contacts</span
+          >
+        </button></a>
+      </div>
+      <div class="p-4 flex gap-4 justify-center">
+        <a href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+            class="text-neutral-950 hover:text-primary-600"
+            target="_blank" style="color: black;"><i class="fa-brands fa-whatsapp text-xl">
+        </i></a>
+        {% for i in social_medias %}
+        {% if i.social_media.name == 'Facebook'%}
+        <a href="{{i.link}}"><i class="fa-brands fa-facebook text-lg text-primary-500"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Twitter'%}
+        <a href="{{i.link}}"><i class="fa-brands fa-twitter text-lg text-primary-500"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Linkedin'%}
+        <a href="{{i.link}}"><i class="fa-brands fa-linkedin text-lg text-primary-500"></i></a>
+        {% endif %}
+        {% if i.social_media.name == 'Instagram' %}
+        <a href="{{i.link}}"><i class="fa-brands fa-instagram text-lg text-primary-500"></i></a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>

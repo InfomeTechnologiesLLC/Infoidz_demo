@@ -1,0 +1,67 @@
+{% load static %}
+<div id="webcrumbs">
+    <div
+      class="w-[360px] bg-white shadow-lg rounded-lg p-6 flex flex-col gap-4"
+    >
+      <div class="flex flex-col items-center gap-4">
+        <img
+          src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+          alt="Profile"
+          class="w-[100px] h-[100px] rounded-full object-cover"
+        />
+        {% if entry.name != None %}
+        <h1 class="text-xl font-title text-neutral-950">{{entry.name}}</h1>
+        {% endif %}
+        {% if entry.designation != None %}
+        <p class="text-neutral-500 text-center">
+          {{entry.designation}}
+        </p>
+        {% endif %}
+        <a
+            href="{% url 'getvcard' entry.url_slug %}"
+            
+            style="border: none"><button
+          class="bg-primary-500 text-primary-50 w-[120px] h-[40px] rounded-md"
+        >
+          Add to Contact
+        </button></a>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div>
+        {% if entry.personal_number != None %}
+        <h2 class="text-sm font-medium text-neutral-950">Phone</h2>
+        <a href="tel:{{entry.personal_number}}" class="text-decoration-none"><p class="text-neutral-500">{{entry.personal_number}}</p></a>
+          {% endif %}
+        </div>
+        <div>
+            {% if entry.email != None%}
+          <h2 class="text-sm font-medium text-neutral-950">Email</h2>
+          <a href="mailto:{{entry.email}}" class="text-decoration-none"><p class="text-neutral-500">{{entry.email}}</p></a>
+          {% endif %}
+        </div>
+        <div>
+        {% if entry.website != None %}
+          <h2 class="text-sm font-medium text-neutral-950">Website</h2>
+          <a class="text-decoration-none;" href="{{entry.website}}" target="_blank"><p class="text-neutral-500 ">{{entry.website}}</p></a>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        <!-- <h2 class="text-sm font-medium text-neutral-950">Social Media</h2> -->
+
+        <div class="flex items-center gap-4 mt-2">
+            {% for i in social_medias %}
+            {% if i.social_media.name == 'Facebook' %}
+          <a href="{{i.link}}"><i class="fa-brands fa-facebook text-primary-500 text-xl"></i></a>
+          {% endif %}
+          {% if i.social_media.name == 'Twitter' %}
+          <a href="{{i.link}}"><i class="fa-brands fa-twitter text-primary-500 text-xl"></i></a>
+          {% endif %}
+          {% if i.social_media.name == 'Linkedin' %}
+          <a href="{{i.link}}"><i class="fa-brands fa-linkedin text-primary-500 text-xl"></i></a>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>

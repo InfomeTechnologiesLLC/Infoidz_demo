@@ -1,0 +1,116 @@
+{% load static %}
+<div id="webcrumbs">
+    <div class="w-[400px] bg-white shadow-xl rounded-lg overflow-hidden">
+      <div
+        style="
+          background-image: url('https://img.freepik.com/free-photo/flat-lay-desktop-with-agenda-magnifying-glass_23-2148397834.jpg');
+          background-size: cover;
+          background-position: center;
+        "
+        class="h-[150px]"
+      ></div>
+      <div class="relative flex flex-col items-center -mt-12">
+        <img
+          src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+          alt="Profile"
+          class="w-[100px] h-[100px] rounded-full border-4 border-white shadow-lg"
+        />
+        {% if entry.name != None %}
+        <h1 class="text-lg font-title text-neutral-950 font-bold mt-6">
+          {{entry.name}}
+        </h1>
+        {% endif %}
+      </div>
+      <div class="px-6 mt-6">
+        <div
+          class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+            <span class="material-symbols-outlined">badge</span> Role
+          </span>
+          {% if entry.designation != None %}
+          <span class="text-neutral-600">{{entry.designation}}</span>
+          {% endif %}
+        </div>
+        <div
+          class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+            <span class="material-symbols-outlined">mail</span> Email
+          </span>
+          {% if entry.email %}
+          <a href="mailto:{{entry.email}}" class="text-decoration-none"><span class="text-neutral-600">{{entry.email}}</span></a>
+          {% endif %}
+        </div>
+        <div
+          class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+            <span class="material-symbols-outlined">call</span> Phone
+          </span>
+          {% if entry.personal_number != None %}
+          <a href="tel:{{entry.personal_number}}" class="text-decoration-none"><span class="text-neutral-600">{{entry.personal_number}}</span></a>
+          {% endif %}
+        </div>
+        <div
+          class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+          
+            <span class="material-symbols-outlined">location_on</span>
+            Location
+          </span>
+          {% if entry.location != None %}
+          <span class="text-neutral-600">{{entry.location}}</span>
+          {% endif %}
+        </div>
+        <div
+          class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+            <span class="material-symbols-outlined">language</span> Website
+          </span>
+          {% if entry.website %}
+          <a href="{{entry.website}}" target="_blank"><span class="text-neutral-600">{{entry.website}}</span></a>
+          {% endif %}
+        </div>
+        <!-- <div
+          class="flex items-center justify-between text-sm text-neutral-600"
+        >
+          <span
+            class="flex gap-2 items-center text-neutral-950 font-semibold"
+          >
+            <span class="material-symbols-outlined">info</span> Description
+          </span>
+          {% if entry.about_me %}
+          <p class="text-neutral-600 w-[65%] text-right">
+            {{entry.about_me}}
+          </p>
+          {% endif %}
+        </div> -->
+      </div>
+      <div class="p-6">
+        <button
+          class="w-full bg-primary-500 hover:bg-primary-600 text-primary-50 py-3 rounded-md font-semibold transition-all"
+        >
+        <a
+        href="{% url 'getvcard' entry.url_slug %}"
+        
+        style="border: none"><span class="flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">person_add</span> Add to
+            Contacts
+          </span></a>
+        </button>
+      </div>
+    </div>
+  </div>

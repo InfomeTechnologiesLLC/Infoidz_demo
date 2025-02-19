@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>INFOTAG</title>
+    {% include 'includes/portal-header.html' %}
+
+  </head>
+  <body>
+
+    {% include 'includes/portal-navbar.html' %}
+
+    <div class="az-content az-content-dashboard">
+      <div class="container">
+        <div class="az-content-body">
+          <div class="az-dashboard-one-title">
+            <div>
+              <h2 class="az-dashboard-title">Hi, welcome back!</h2>
+              <!-- <p class="az-dashboard-text">Your web analytics dashboard template.</p> -->
+            </div>
+            
+            <div class="az-content-header-right">
+              <div class="media">
+                <div class="media-body">
+                  <label>DATE</label>
+                  <h6 id="comman-date">Oct 10, 2018</h6>
+                </div><!-- media-body -->
+              </div><!-- media -->
+              <div class="media">
+                <div class="media-body">
+                  <label>TIME</label>
+                  <h6 id="comman-time">11:56 PM</h6>
+                </div><!-- media-body -->
+              </div><!-- media -->
+              <div class="media">
+                <div class="media-body">
+                  <label>Section</label>
+                  <h6>Dashboard</h6>
+                </div><!-- media-body -->
+              </div><!-- media -->
+              <!-- <a href="" class="btn btn-purple">Export</a> -->
+            </div>
+
+          </div><!-- az-dashboard-one-title -->
+
+          <div class="row row-sm mg-b-20">
+            <div class="col-lg-7 ht-lg-100p">
+              <div class="card card-dashboard-one">
+                <div class="card-header">
+                  <div>
+                    <h6 class="card-title">Contact Added Graph</h6>
+                    <!-- <p class="card-text">Audience to which the users belonged while on the current date range.</p> -->
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn active" onclick="updateCount('day')">Day</button>
+                    <button class="btn" onclick="updateCount('week')">Week</button>
+                    <button class="btn" onclick="updateCount('month')">Month</button>
+                  </div>
+                </div><!-- card-header -->
+                <div class="card-body">
+                  <div class="card-body-top">
+                    <div>
+                      <label class="mg-b-0">Total Contacts</label>
+                      <h2>{{total_count}}</h2>
+                    </div>
+                    <div>
+                      <label class="mg-b-0">This Month</label>
+                      <h2>{{this_month_count}}</h2>
+                    </div>
+                    <div>
+                      <label class="mg-b-0">This Week</label>
+                      <h2>{{this_week_count}}</h2>
+                    </div>
+                    <div>
+                      <label class="mg-b-0">Today</label>
+                      <h2>{{today_count}}</h2>
+                    </div>
+                  </div><!-- card-body-top -->
+                  <div class="flot-chart-wrapper">
+                    <div id="flotChart" class="flot-chart"></div>
+                  </div><!-- flot-chart-wrapper -->
+                </div><!-- card-body -->
+              </div><!-- card -->
+            </div><!-- col -->
+            <div class="col-lg-5 mg-t-20 mg-lg-t-0">
+              <div class="row row-sm">
+                <div class="col-sm-6">
+                  <div class="card card-dashboard-two">
+                    <div class="card-header">
+                      <h6>{{request.user.profile.organization.contact_limit}} <i class="icon ion-md-speedometer  tx-success"></i> </h6>
+                      <p>Contact Limit</p>
+                    </div><!-- card-header -->
+                    <div class="card-body">
+                      <div class="chart-wrapper">
+                        <div id="flotChart1" class="flot-chart"></div>
+                      </div><!-- chart-wrapper -->
+                    </div><!-- card-body -->
+                  </div><!-- card -->
+                </div><!-- col -->
+                <div class="col-sm-6 mg-t-20 mg-sm-t-0">
+                  <div class="card card-dashboard-two">
+                    <div class="card-header">
+                      <h6>{{request.user.profile.organization.expiry_date |date:'d-m-Y' }} <i class="icon ion-ios-calendar tx-danger"></i></h6>
+                      <p>Expiry Date</p>
+                    </div><!-- card-header -->
+                    <div class="card-body">
+                      <div class="chart-wrapper">
+                        <div id="flotChart2" class="flot-chart"></div>
+                      </div><!-- chart-wrapper -->
+                    </div><!-- card-body -->
+                  </div><!-- card -->
+                </div><!-- col -->
+                <div class="col-sm-12 mg-t-20">
+                  <div class="card card-dashboard-three">
+                    <div class="card-header">
+                      <p>Total Contact</p>
+                      <h6>{{total_count}}<small class="tx-success"><i class="icon ion-md-arrow-up"></i> 2.87%</small></h6>
+                      <!-- <small>The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc.</small> -->
+                    </div><!-- card-header -->
+                    <div class="card-body">
+                      <div class="chart"><canvas id="chartBar5"></canvas></div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- row -->
+            </div><!--col -->
+          </div><!-- row -->
+
+        
+
+        
+        </div><!-- az-content-body -->
+      </div>
+    </div>
+
+    {% include 'includes/portal-footer.html' %}
+    <script src="{% static 'scripts/dashboard.js' %}"></script>
+
+
+    <script>
+
+      var last_15=JSON.parse(JSON.stringify({{ last_15_days |safe  }}))
+
+      var last_15_days=[]
+      var last_15_counts=[]
+
+      for (let i = 0; i < last_15.length; i++) {
+        
+        last_15_days.push([i+50,last_15[i]['day']])
+        last_15_counts.push([i+50,last_15[i]['n']])
+      }
+
+    
+      $(function(){
+        'use strict'
+
+    		var plot = $.plot('#flotChart', [{
+          data: last_15_counts,
+          color: '#007bff',
+          lines: {
+            fillColor: { colors: [{ opacity: 0 }, { opacity: 0.2 }]}
+          }
+        }], {
+    			series: {
+    				shadowSize: 0,
+            lines: {
+              show: true,
+              lineWidth: 2,
+              fill: true
+            }
+    			},
+          grid: {
+            borderWidth: 0,
+            labelMargin: 8
+          },
+    			yaxis: {
+            show: true,
+    				min: 0,
+    			
+           
+            tickColor: '#eee'
+    			},
+    			xaxis: {
+            labelMargin: 8,
+            show: true,
+            color: '#fff',
+            ticks: last_15_days,
+          }
+        });
+
+        $.plot('#flotChart1', [{
+          data: dashData2,
+          color: '#00cccc'
+        }], {
+    			series: {
+    				shadowSize: 0,
+            lines: {
+              show: true,
+              lineWidth: 2,
+              fill: true,
+              fillColor: { colors: [ { opacity: 0.2 }, { opacity: 0.2 } ] }
+            }
+    			},
+          grid: {
+            borderWidth: 0,
+            labelMargin: 0
+          },
+    			yaxis: {
+            show: false,
+            min: 0,
+            max: 35
+          },
+    			xaxis: {
+            show: false,
+            max: 50
+          }
+    		});
+
+        $.plot('#flotChart2', [{
+          data: dashData2,
+          color: '#007bff'
+        }], {
+    			series: {
+    				shadowSize: 0,
+            bars: {
+              show: true,
+              lineWidth: 0,
+              fill: 1,
+              barWidth: .5
+            }
+    			},
+          grid: {
+            borderWidth: 0,
+            labelMargin: 0
+          },
+    			yaxis: {
+            show: false,
+            min: 0,
+            max: 35
+          },
+    			xaxis: {
+            show: false,
+            max: 20
+          }
+    		});
+
+
+        //-------------------------------------------------------------//
+
+
+        // Line chart
+        $('.peity-line').peity('line');
+
+        // Bar charts
+        $('.peity-bar').peity('bar');
+
+        // Bar charts
+        $('.peity-donut').peity('donut');
+
+        var ctx5 = document.getElementById('chartBar5').getContext('2d');
+        new Chart(ctx5, {
+          type: 'bar',
+          data: {
+            labels: [0,1,2,3,4,5,6,7],
+            datasets: [{
+              data: [2, 4, 10, 20, 45, 40, 35, 18],
+              backgroundColor: '#560bd0'
+            }, {
+              data: [3, 6, 15, 35, 50, 45, 35, 25],
+              backgroundColor: '#cad0e8'
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            tooltips: {
+              enabled: false
+            },
+            legend: {
+              display: false,
+                labels: {
+                  display: false
+                }
+            },
+            scales: {
+              yAxes: [{
+                display: false,
+                ticks: {
+                  beginAtZero:true,
+                  fontSize: 11,
+                  max: 80
+                }
+              }],
+              xAxes: [{
+                barPercentage: 0.6,
+                gridLines: {
+                  color: 'rgba(0,0,0,0.08)'
+                },
+                ticks: {
+                  beginAtZero:true,
+                  fontSize: 11,
+                  display: false
+                }
+              }]
+            }
+          }
+        });
+
+        // Donut Chart
+        var datapie = {
+          labels: ['Search', 'Email', 'Referral', 'Social', 'Other'],
+          datasets: [{
+            data: [25,20,30,15,10],
+            backgroundColor: ['#6f42c1', '#007bff','#17a2b8','#00cccc','#adb2bd']
+          }]
+        };
+
+        var optionpie = {
+          maintainAspectRatio: false,
+          responsive: true,
+          legend: {
+            display: false,
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        };
+
+        // For a doughnut chart
+        var ctxpie= document.getElementById('chartDonut');
+        var myPieChart6 = new Chart(ctxpie, {
+          type: 'doughnut',
+          data: datapie,
+          options: optionpie
+        });
+
+      });
+
+
+  function updateCount(period) {
+    $.ajax({
+      url: "{% url 'portal:dashboard' %}",  
+      type: 'GET',
+      data: {
+        'period': period
+      },
+      success: function(response) {
+        $('#count-display').text(response.count);
+      },
+      
+    });
+  }
+
+    </script>
+  </body>
+</html>

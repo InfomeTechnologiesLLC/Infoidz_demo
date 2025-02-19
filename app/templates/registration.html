@@ -1,0 +1,301 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'registration_assets/fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'registration_assets/css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'registration_assets/css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'registration_assets/css/style.css' %}">
+
+    <title>Sign Up #2</title>
+  </head>
+  <body>
+  
+
+  <div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2" style="background-image: url('{% static 'registration_assets/images/bg_2.png' %}');"></div>
+    <div class="contents order-2 order-md-1">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-7 py-5">
+            <h3>Register</h3>
+            <p class="mb-4">Fill in the details to get the free printed demo of your NFC business card</p>
+            <form action="#" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="e.g. John" id="fname">
+                  </div>    
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="last-name" class="form-control" placeholder="e.g. Smith" id="lname">
+                  </div>    
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group first">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email">
+                  </div>    
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="lname">Personal Number</label>
+                    <input type="text" id="personal-number" class="form-control" placeholder="+00 0000 000 0000" id="lname">
+                  </div>    
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="lname">Whatsapp Number</label>
+                    <input type="text" id="whatsapp-number" class="form-control" placeholder="+00 0000 000 0000" id="lname">
+                  </div>    
+                </div>
+
+
+          
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="lname">Address</label>
+                    <input type="text" id="address" class="form-control" placeholder="+00 0000 000 0000" id="lname">
+                  </div>    
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group first">
+                    <label for="lname">Location</label>
+                    <input type="text" id="location" class="form-control" placeholder="+00 0000 000 0000" id="lname">
+                  </div>    
+                </div>
+
+
+          
+              </div>
+
+
+<div class="row">
+<div class="col-md-12">
+  <div class="form-group first">
+    <label for="company">Company Name</label>
+    <input type="text" id="company-name" class="form-control" placeholder="e.g. john@your-domain.com" id="email">
+  </div>  
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6">
+  <div class="form-group first">
+    <label for="lname">Designation</label>
+    <input type="text" id="designation" class="form-control" placeholder="Designation" id="lname">
+  </div> 
+</div>
+<div class="col-md-6">
+  <div class="form-group first">
+    <label for="lname">Office Number</label>
+    <input type="text" id="office-number" class="form-control" placeholder="Office Number" id="lname">
+  </div> 
+</div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group first">
+      <label for="lname">Website</label>
+      <input type="text" id="website" class="form-control" placeholder="e.g. https://google.com" id="lname">
+    </div>    
+  </div>
+</div>
+<div class="row">
+
+<div class="col-md-4">
+  <div class="form-group first">
+    <label for="lname">Profile Pic</label>
+    <input type="file" id="profile-pic" class="form-control" id="lname">
+  </div>  
+</div>
+
+<div class="col-md-4">
+  <div class="form-group first">
+    <label for="lname">Profile Thumbnail</label>
+    <input type="file" id="profile-thumbnail" class="form-control" id="lname">
+  </div>  
+</div>
+
+<div class="col-md-4">
+  <div class="form-group first">
+    <label for="lname">Cover Image</label>
+    <input type="file" id="cover-image" class="form-control" id="lname">
+  </div>  
+</div>
+
+<div id="social-media-section">
+  <div class="form-group first">
+      <label for="social-media">Social Media</label>
+      <div class="input-group">
+          <select id="social-media-type" class="form-control social-media-type" style="max-width: 150px;">
+              {% for s in social_medias %}
+                  <option value="{{s.id}}" s-icon="{{s.icon}}">{{s.name}}</option>
+              {% endfor %}
+          </select>
+          <input type="text" class="form-control social-media-url" placeholder="Enter URL e.g. https://socialmedia.com/your-profile">
+          <button type="button" class="btn btn-secondary" id="add-social-media">Add Link</button>
+      </div>
+  </div>
+</div>
+
+<div id="additional-social-media-links"></div>
+
+
+
+</div>
+
+       
+              
+              <div class="d-flex mb-5 mt-4 align-items-center">
+                <div class="d-flex align-items-center">
+                <!-- <label class="control control--checkbox mb-0"><span class="caption">Creating an account means you're okay with our <a href="#">Terms and Conditions</a> and our <a href="#">Privacy Policy</a>.</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label> -->
+              </div>
+              </div>
+
+              <input type="submit" value="Register" class="btn px-5 btn-primary">
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+    
+    
+
+    <script src="{% static 'registration_assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'registration_assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'registration_assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'registration_assets/js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+function registration(event) {
+    event.preventDefault(); 
+
+    var formData = new FormData(); 
+
+    formData.append('first_name', document.getElementById('first-name').value);
+    formData.append('last_name', document.getElementById('last-name').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('personal_number', document.getElementById('personal-number').value);
+    formData.append('whatsapp_number', document.getElementById('whatsapp-number').value);
+    formData.append('address', document.getElementById('address').value);
+    formData.append('location', document.getElementById('location').value);
+    formData.append('company_name', document.getElementById('company-name').value);
+    formData.append('designation', document.getElementById('designation').value);
+    formData.append('office_number', document.getElementById('office-number').value);
+    formData.append('website', document.getElementById('website').value);
+
+    var socialLinks = [];
+    $('#social-media-section .input-group, #additional-social-media-links .input-group').each(function() {
+        var socialMediaType = $(this).find('.social-media-type').val();
+        var socialMediaUrl = $(this).find('.social-media-url').val();
+
+        if (socialMediaType && socialMediaUrl) {
+            socialLinks.push({
+                'social_media_type': socialMediaType,
+                'social_media_link': socialMediaUrl
+            });
+        }
+    });
+
+    formData.append('social_links', JSON.stringify(socialLinks));
+    
+    
+    formData.append('profile_pic', $('#profile-pic').prop('files')[0]);
+    formData.append('profile_thumbnail', $('#profile-thumbnail').prop('files')[0]);
+    formData.append('cover_image', $('#cover-image').prop('files')[0]);
+    
+    $.ajax({
+      url: "{% url 'registration' %}",  
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}' 
+      },
+      success: function(response) {
+        
+        Swal.fire({
+          title: 'Registration Successful!',
+          text: response.message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = 'registration_page'; 
+          }
+        }); 
+       
+      },      
+    });
+  }
+
+  $(document).ready(function() {
+    $("form").on("submit", registration);
+  });
+
+  function addSocialMediaField() {
+    var newSocialMediaField = `
+        <div class="input-group mt-2">
+            <select class="form-control social-media-type" style="max-width: 150px;">
+                {% for s in social_medias %}
+                    <option value="{{s.id}}" s-icon="{{s.icon}}">{{s.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="text" class="form-control social-media-url" placeholder="Enter URL e.g. https://socialmedia.com/your-profile">
+            <button type="button" class="btn btn-danger remove-social-media">Remove</button>
+        </div>
+    `;
+
+    $('#additional-social-media-links').append(newSocialMediaField);
+}
+
+$(document).on('click', '.remove-social-media', function() {
+    $(this).closest('.input-group').remove();
+});
+
+$(document).ready(function() {
+    $('#add-social-media').on('click', function() {
+        addSocialMediaField();
+    });
+});
+
+    </script>
+
+  </body>
+</html>
+

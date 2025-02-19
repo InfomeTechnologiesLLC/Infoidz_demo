@@ -1,0 +1,1024 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>INFOIDZ</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'app/css/styles.css' %}?update=1" rel="stylesheet" />
+        <link href="{% static 'app/css/owl.carousel.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'app/css/bootstrap.min.css.map.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/animate.css' %}" rel="stylesheet" />
+        <link href="{% static 'app/css/bootstrap.min.css' %}" rel="stylesheet" />
+       
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<style>
+
+.custom-list {
+            list-style-type: none; /* Remove default list style */
+            padding: 0; /* Remove default padding */
+        }
+
+        .custom-list li {
+            margin-bottom: 10px; /* Adjust margin as needed */
+            background: url("{% static 'app/assets/img/tick_icon.png' %}") no-repeat left center; /* Set your image path */
+            background-size: 20px 20px; /* Adjust the size of the image */
+            padding-left: 30px; /* Adjust padding to make space for the image */
+            line-height: 20px; /* Adjust line height based on image size */
+        }
+
+        .custom-list li:hover
+        {
+            color: rgb(51, 118, 156);
+            cursor: pointer;
+
+            transition: transform .2s;
+            transform: scale(1.1);
+            
+        }
+
+/* navbar design start */
+
+
+
+.active a{
+    color: #3664a8 !important; /* Text color */
+    font-weight: 600;
+}
+
+
+/* navbar design end */
+
+/* accordian start */
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    font-family: "Sora", sans-serif;
+    max-width: 991px;
+    min-width: 320px;
+    margin: 50px auto;
+  
+}
+.accordion h1 {
+    font-size: 32px;
+    text-align: center;
+}
+.accordion-item {
+    margin-top: 16px;
+    border: 1px solid #fcfcfc;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.accordion-item .accordion-item-title {
+    position: relative;
+    margin: 0;
+    display: flex;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    padding: 14px 20px;
+    box-sizing: border-box;
+    align-items: center;
+}
+.accordion-item .accordion-item-desc {
+    display: none;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 300;
+    color: #444;
+    border-top: 1px dashed #ddd;
+    padding: 10px 20px 20px;
+    box-sizing: border-box;
+}
+.accordion-item input[type="checkbox"] {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+.accordion-item input[type="checkbox"]:checked ~ .accordion-item-desc {
+    display: block;
+}
+.accordion-item
+    input[type="checkbox"]:checked
+    ~ .accordion-item-title
+    .icon:after {
+    content: "-";
+    font-size: 20px;
+}
+.accordion-item input[type="checkbox"] ~ .accordion-item-title .icon:after {
+    content: "+";
+    font-size: 20px;
+}
+.accordion-item:first-child {
+    margin-top: 0;
+}
+.accordion-item .icon {
+    margin-left: 14px;
+}
+
+@media screen and (max-width: 767px) {
+    .accordion {
+        padding: 0 16px;
+    }
+    .accordion h1 {
+        font-size: 22px;
+    }
+}
+
+
+
+/* accordian end */
+
+/* this is a demo page start */
+
+
+/* this is a demo page end */
+
+
+/* new design start */
+
+.container-card {
+    display: flex;
+}
+
+.image-container {
+    flex: 1;
+}
+
+.content-container {
+    flex: 1;
+}
+
+/* Additional styling as needed */
+
+
+
+/* new design end */
+
+
+</style>
+
+
+        
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold" href="#page-top">INFOIDZ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="bi-list"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                        <li class="nav-item active"><a class="nav-link me-lg-3">Home</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Features</a></li>
+                          <li class="nav-item"><a class="nav-link me-lg-3" href="#cardsweprovide">Cards We Provide</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="#howitworks">How it works</a></li>
+                          <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Pricing</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link me-lg-3" href="#download">Download</a></li> -->
+                    </ul>
+                    
+                    <a target="_blank" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-toggle="modal" data-target="#feedbackModal">
+                        <span class="d-flex align-items-center">
+                            <i class="bi bi-journal-check"></i> 
+                             <span class="small"> Get a quote</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <!-- Mashead header-->
+        <header class="masthead">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6">
+                        <!-- Mashead text and app badges-->
+                        <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                            <h1 class="display-1 lh-1 mb-3" style="font-size: 5rem;" data-aos="fade-left" data-aos-duration="1000">Just One Swift Tap to</h1>
+                            <svg class="svg_text" viewBox="0 0 1320 200" data-aos="fade-right" data-aos-duration="1000">
+                                <text x="50%" y="35%" dy=".15em" text-anchor="middle" style="font-size: 88px; font-weight:bold;">
+                                    Share Your Business Card
+                                </text>
+                              </svg>  
+                            <p class="lead fw-normal text-muted mb-5" style="font-size: 1rem; text-align: justify;"  data-aos="fade-left" data-aos-duration="1000">It's time to forget paper business cards. Redefine the way you share your business cards with InfoIDz. We bring the most convenient and advanced solution to transmit it with just a single tap using smart cards.</p>
+                            <!-- <div class="d-flex flex-column flex-lg-row align-items-center">
+                                <a class="me-lg-3 mb-4 mb-lg-0" href="#!"><img class="app-badge" src="assets/img/google-play-badge.svg" alt="..." /></a>
+                                <a href="#!"><img class="app-badge" src="assets/img/app-store-badge.svg" alt="..." /></a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Masthead device mockup feature-->
+                        <div class="masthead-device-mockup" data-aos="fade-up" data-aos-duration="1000">
+
+                            <div class="device-wrapper">
+                                <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
+                          
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Quote/testimonial aside-->
+        <aside class="text-center bg-gradient-primary-to-secondary" data-aos="fade-down" data-aos-duration="1000">
+            <div class="container px-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-xl-8">
+                        <div class="h2 fs-1 text-white mb-4"  data-aos="fade-left" data-aos-duration="1000">"We're the masters of crafting innovations with smart solutions for seamless connections and lasting impressions wherever you go!"</div>
+                        <h2 class="text-center text-white font-weight-bold">INFOIDZ</h2>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- App features section-->
+
+
+
+        <section id="features">
+            <div class="p-2 px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-7 order-lg-1 mb-5 mb-lg-0">
+                        <div class="container-fluid px-5">
+                            <div class="row gx-5">
+                                <div class="col-md-6 mb-5" >
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-forward icon-feature text-gradient d-block mb-3"  data-aos="fade-left" data-aos-duration="1000"></i>
+                                        <h3 class="font-alt"  data-aos="fade-right" data-aos-duration="1000">One-Tap Sharing</h3>
+                                        <p class="text-muted mb-0"  data-aos="fade-up-right" data-aos-duration="1000">Just one tap of the NFC business card is all enough to share your business card to another person.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5" >
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-layout-split icon-feature text-gradient d-block mb-3"  data-aos="fade-left" data-aos-duration="1000"></i>
+                                        <h3 class="font-alt"  data-aos="fade-right" data-aos-duration="1000">Interactive Design</h3>
+                                        <p class="text-muted mb-0"  data-aos="fade-up-left" data-aos-duration="1000">We create attractive & interactive digital business cards that best suit your identity and organization.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-5 mb-md-0">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-pencil icon-feature text-gradient d-block mb-3"  data-aos="fade-left" data-aos-duration="1000"></i>
+                                        <h3 class="font-alt"  data-aos="fade-right" data-aos-duration="1000">Customization</h3>
+                                        <p class="text-muted mb-0"  data-aos="fade-up-right" data-aos-duration="1000"> We value the purpose of each brand, that is why we're committed to designing and providing.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-graph-up icon-feature text-gradient d-block mb-3"  data-aos="fade-left" data-aos-duration="1000"></i>
+                                        <h3 class="font-alt"  data-aos="fade-right" data-aos-duration="1000">Analytics</h3>
+                                        <p class="text-muted mb-0"  data-aos="fade-up-right" data-aos-duration="1000">Your digital business card can be saved on the device you tapped once and shared on any other devices.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 order-lg-0" >
+                        <!-- Features section device mockup-->
+                        <div class="">
+                            <div style="height: 400px;">
+                                <img src="{% static 'app/assets/img/infoidz mobile animation 3.gif'  %}" style="height: 450px; width: 500px;"  data-aos="zoom-in" data-aos-duration="1000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+<!-- new section start -->
+
+<div class="row">
+<div class="col-md-12">
+<img class="img-fluid" src="{% static 'app/assets/img/infoidz img-2-01.jpg' %}">
+<div class="shadow card position-absolute" style="background-color: #010483; top: 50%; left: 20%; transform: translate(-50%, -50%); width: 400px;">
+    <div class="card-body">
+        <h3 class="card-title text-white mb-3">Make Your InfoID More Impressive with These Ideas</h3>
+        <ul class="list-unstyled">
+            <li class="list-item">Share your business details</li>
+            <li class="list-item">Tell them how to connect with you</li>
+            <li class="list-item">Set your website's link</li>
+            <li class="list-item">List your social media platforms</li>
+            <li class="list-item">Add your image for personal touch</li>
+            <li class="list-item">Add a stunning cover photo</li>
+            <!-- Add more points as needed -->
+        </ul>
+
+<button class="btn btn-outline-light mt-3">Contact Us</button>
+
+    </div>
+
+
+
+</div>
+
+</div>
+</div>
+
+
+<!-- 
+ 
+
+
+-->
+
+
+
+
+
+
+<!-- new section end -->
+
+<!-- section start -->
+
+<!-- <section >
+
+    <div class="container px-5">
+        <div class="d-flex justify-content-center">
+    <h1 class="text-center" style="color:#010483; width: 50%;"  data-aos="fade-up-right" data-aos-duration="1000">
+        Make Your InfoID More Impressive with These Ideas
+    </h1>
+</div>
+<div class="row">
+<div class="col-md-6">
+<img class="img-fluid" style="width: 100%;" src="{% static 'app/assets/img/infoidz  bg pic -4-01.png' %}"  data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom">
+
+</div>
+<div class="col-md-6" style="padding: 30px; background-color: rgba(159, 159, 179, 0.089);">
+    <ul class="custom-list p-2">
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-left" data-aos-duration="1000">Share your business details </li>
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-right" data-aos-duration="1000">Tell them how to connect with you</li>
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-left" data-aos-duration="1000">Set your website's link </li>
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-right" data-aos-duration="1000">List your social media platforms</li>
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-left" data-aos-duration="1000">Add your image for personal touch</li>
+    <li class="mb-5" style="font-size: 20px; font-weight:bold;"  data-aos="fade-right" data-aos-duration="1000">Add a stunning cover photo</li>
+    
+</ul>
+</div>
+</div>
+
+    </div>
+    
+    </section> -->
+    
+    
+    
+    <!-- section end -->
+
+<!-- different card design demo start -->
+
+
+<!-- <section class="section-design">
+    <div class="row-design">
+        <div class="col-row" style="background-color: black;">hii</div>
+        <div class="col-row" style="background-color: rgb(48, 47, 47);">hii</div>
+        <div class="col-row" style="background-color: rgb(39, 33, 46);">hii</div>
+        <div class="col-row" style="background-color: rgb(6, 2, 37);">hii</div>
+    </div>
+</section> -->
+
+<!-- diffent card design demo start -->
+
+<!-- design card start -->
+
+  <section id="section-1" class="section-card">
+    <div class="content-slider">
+      <input type="radio" id="banner1" class="sec-1-input" name="banner" checked>
+      <input type="radio" id="banner2" class="sec-1-input" name="banner">
+      <input type="radio" id="banner3" class="sec-1-input" name="banner">
+      <input type="radio" id="banner4" class="sec-1-input" name="banner">
+      <div class="slider">
+        <div id="top-banner-1" class="banner">
+          <div class="banner-inner-wrapper">
+            <h2 class="text-white">PVC WHITE CARD</h2>
+      <img class="img-fluid" style="width: 30%;" src="{% static 'app/assets/img/pvc_white_sin-Recovered.png' %}">
+            <!-- <div class="line"></div> -->
+            <div class="learn-more-button"><a href="#section-2">Buy Now</a></div>
+          </div>
+        </div>
+        <div id="top-banner-2" class="banner">
+          <div class="banner-inner-wrapper">
+            <h2 class="text-white">PVC BLACK CARD</h2>
+            <img class="img-fluid" style="width: 30%;" src="{% static 'app/assets/img/pvc_black_new.png' %}">
+            <!-- <div class="line"></div> -->
+            <div class="learn-more-button"><a href="#section-4">Buy Now</a></div>
+          </div>
+        </div>
+        <div id="top-banner-3" class="banner">
+            
+          <div class="banner-inner-wrapper">
+            <h2 class="text-white">GOLD CARD</h2>
+            <img class="img-fluid" style="width: 30%;" src="{% static 'app/assets/img/card_gold_new.png' %}">
+            <!-- <div class="line"></div> -->
+            <div class="learn-more-button"><a href="#section-6">Buy Now</a></div>
+          </div>
+        </div>
+        <div id="top-banner-4" class="banner">
+            
+          <div class="banner-inner-wrapper">
+            <h2 class="text-white">SILVER CARD</h2>
+            <img class="img-fluid" style="width: 30%;" src="{% static 'app/assets/img/card_silver_new.png' %}">
+            <!-- <div class="line"></div> -->
+            <div class="learn-more-button"><a href="#main-footer">Buy Now</a></div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="controls">
+          <label for="banner1"><span class="progressbar"><span class="progressbar-fill"></span></span><span>01</span> PVC WHITE CARD</label>
+          <label for="banner2"><span class="progressbar"><span class="progressbar-fill"></span></span><span>02</span> PVC BLACK CARD</label>
+          <label for="banner3"><span class="progressbar"><span class="progressbar-fill"></span></span><span>03</span> SILVER CARD</label>
+          <label for="banner4"><span class="progressbar"><span class="progressbar-fill"></span></span><span>04</span> GOLD CARD</label>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+
+
+<!-- design card end -->
+
+      <!-- update on the feature design start -->
+        <!-- <section class="bg-light">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                    <div class="col-12 col-lg-5">
+                        <h2 class="display-4 lh-1 mb-4" data-aos="fade-down-right" data-aos-duration="1000">Update on the Fly </h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0"  data-aos="fade-up-left" data-aos-duration="1000">Keep your contacts in the loop with real-time updates. Change job titles, phone numbers, or addresses, and your network will always have the latest information.</p>
+                    </div>
+                    <div class="col-sm-8 col-md-6">
+                        <div class="px-5 px-sm-0"  data-aos="fade-down-left" data-aos-duration="1000"><img class="img-fluid" src="{% static 'app/assets/img/infoidz bg-3-01.png' %}" alt="..." /></div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+<!-- update on the feature design end -->
+
+<!-- new update on the feature start -->
+
+<section class="parallax-sec" style="padding-bottom: 0px !important;">
+    <div id="parallax" class="parallax-item">
+      
+      </div>
+  </section>
+
+
+<!-- new update on the feature end -->
+
+<!-- a new section start -->
+
+<div class="row">
+
+<div class="col-md-6" style="padding: 0px !important;">
+<div style="height: 100%; background-color: #010483;">
+<div  style="padding-left: 100px; padding-right: 100px; padding-top: 100px; padding-bottom: 30px;">
+    <h1 class="text-white">
+        The Most Convenient Way to Share Business Cards</h1>
+</div>
+<div style="padding-left: 100px; padding-right: 100px;">
+<p class="text-white text-justify" style="line-height: 1.7;">You no longer need to carry your paper business cards everywhere if you own an NFC business card by InfoIDz. It is specially designed with the vision of bringing convenience in sharing information during your busy schedule, which makes every businessperson find comfort in transferring their essential details to other persons.
+</p>
+</div>
+<div style="padding-left: 100px; padding-right: 100px;">
+ <button class="btn btn-outline-light mt-5">Contact Us</button>
+    </div>
+</div>
+</div>
+
+<div class="col-md-6" style="padding: 0px;">
+<div>
+    <img class="img-fluid" src="{% static 'app/assets/img/infoids card row-01.jpg' %}" style="">
+</div>
+</div>
+
+
+</div>
+
+
+
+<!-- a new section end -->
+
+
+<!-- how it works starts new -->
+<div class="p-5">
+    <div class="row">
+<div class="col-md-12">
+<h2 class="text-center mt-3 mb-4" style="color: #010483;">How it works</h2>
+</div>
+
+    </div>
+<div class="row mb-5" style="background-color: aliceblue;" >
+<div class="col-md-6 mr-auto align-self-center" data-aos="fade-up-right" data-aos-duration="1000">
+    
+    <div class="p-5" >
+        <h2 >Collecting Information</h2>
+        <p class="text-muted text-justify mt-4">
+            The best way to share business information is to share a business card. While preparing NFC business cards, collecting information from customers is a crucial step. We create business cards for customers, therefore customers can suggest and decide the details they wish to include in the card. 
+            <br>They can customize their business card by including essential details of their business along with contact details, according to the nature and mission of the businesses. Customers have the full right to customize their NFC business card based on their preferences of card design, material and the details to be included.</p>
+       
+    </div>
+</div>
+<div class="col-md-6" data-aos="fade-up-left" data-aos-duration="1000">
+<div>
+    <img class="img-fluid" style="width: 100%;" src="{% static 'app/assets/img/infoidz 2 card img-2-01.png' %}">
+</div>
+</div>
+
+</div>
+
+<div class="row mt-5" >
+
+    <div class="col-md-6" data-aos="fade-up-right" data-aos-duration="1000">
+    <div>
+        <img class="img-fluid" style="width: 100%;" src="{% static 'app/assets/img/wwd-2.png' %}">
+    </div>
+    </div>
+
+    <div class="col-md-6 mr-auto align-self-center" data-aos="fade-up-left" data-aos-duration="1000">
+        <div class="p-5" >
+     
+            <h2 >Material & Design Selection</h2>
+            <p class="text-muted text-justify mt-4">
+                Customers will have their own vision and likes about their business cards. So the first step in creating an NFC business card is the selection of the design and material of the card by the customer. They have the option to choose the design that suits the identity and purpose of their business and the material according to its utility and convenience. 
+                <br>Customers have plenty of design options to choose from, and they can customize their business card according to how they want it to look. Besides, we provide the opportunity for them to select the card material from PVC cards, silver cards, or gold cards.</p>
+          
+        </div>
+    </div>
+
+    
+    </div>
+
+
+    <div class="row mt-5" style="background-color: aliceblue;">
+
+       
+    
+        <div class="col-md-6 mr-auto align-self-center" data-aos="fade-up-right" data-aos-duration="1000">
+            <div class="p-5">
+            
+                <h2 >Printing of the NFC Card</h2>
+                <p class="text-muted text-justify mt-4">
+                    After getting into the confirmation of card design, card material and the details, the next and major step is printing NFC business cards. We print business cards on top-quality smart cards using best-in-industry printers to make the card lifetime usage. <br>We help customers to create a lasting impression with attractive & durable NFC business card on the material and design chosen by our customer with the details. These smart business cards are a great alternative to traditional paper business cards. Just tap the smart business card and you can swiftly share card details to other devices and the device owner can save or share them.</p>
+              
+            </div>
+        </div>
+    
+        <div class="col-md-6" data-aos="fade-up-left" data-aos-duration="1000">
+            <div>
+                <img class="img-fluid" style="width: 100%;" src="{% static 'app/assets/img/wwd-3.png' %}">
+            </div>
+            </div>
+        </div>
+
+
+        
+    <div class="row mt-5">
+
+        <div class="col-md-6" data-aos="fade-up-left" data-aos-duration="1000">
+            <div>
+                <img class="img-fluid" style="width: 100%; height: 100%" src="{% static 'app/assets/img/wwd-4.png' %}">
+            </div>
+            </div>
+    
+        <div class="col-md-6 mr-auto align-self-center" data-aos="fade-up-right" data-aos-duration="1000">
+            <div class="p-5">
+        
+                <h2>Handing Over the Card</h2>
+                <p class="text-muted text-justify mt-4">
+                    The final and most awaited step is handing over the card to the customer. Now, the customers have their smart business card in their palms and they can say hi to the new world of convenience.They can easily share their business card by tapping the NFC smart business card on another person's device.
+                    <br>They can either save the card on their phone or they can share it via different social media platforms. The satisfaction of convenience on our customers' faces after receiving the card makes us proud and motivates us to serve them more.</p>
+          
+            </div>
+        </div>
+    
+        </div>
+
+
+
+</div>
+
+<!-- how it works starts end -->
+
+
+
+
+
+
+
+
+<!-- why we are different start-->
+
+
+<!-- why we were different end -->
+
+<!-- parallax section 2 start -->
+
+<section class="section-background parallax">
+   <div class="row">
+    <div class="d-flex justify-content-center">
+ <div class="col-md-8">
+<h1 class="text-uppercase text-center" style="line-height: 1.7; font-size: -webkit-xxx-large;">ALWAYS AVAILABLE WITH JUST A CLICK AND COMPATIBLE WITH ALL NFC DEVICES</h1>
+ </div>
+
+
+</div>
+
+   </div>
+
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+    <div class="col-md-3">
+        <img class="img-fluid" src="https://zeevector.com/wp-content/uploads/Huawei-Logo-PNG-Colour@zeevector.com_.png" style="width: 100%;">
+       
+         </div>
+
+         <div class="col-md-3">
+        <img class="img-fluid" src="{% static 'app/assets/img/iphone_log.png' %}">
+             </div>
+
+<div class="col-md-3">
+<img class="img-fluid" src="{% static 'app/assets/img/sam-logo.png'  %}">
+</div>
+
+            </div>
+</div>
+
+  </section>
+
+
+
+
+<!-- parallax section 2 end -->
+
+
+<!--card design start -->
+
+<section>
+    <div class="p-3">
+<div class="row">
+
+<div class="col-md-12">
+<img class="img-fluid" src="{% static 'app/assets/img/infoidz card banner-01.jpg' %}"   data-aos="zoom-out-right" data-aos-duration="1000">
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- card design end -->
+
+
+<!-- section price start -->
+
+<section>
+    <h3 class="text text-center">PRICING</h3>
+
+    <div class="pricing">
+
+
+        <div class="pricing-card">
+          <h3 class="pricing-card-heading pricing-card-heading-free">FREE</h3>
+          <ul class="pricing-card-list">
+            <li class="pricing-card-list-item icon-yes">SINGLE SIDE DESIGN</li>
+            <li class="pricing-card-list-item icon-yes">QR CODE DISABLED</li>
+            <li class="pricing-card-list-item icon-yes">NO DASHBOARD ACCESS</li>
+            <li class="pricing-card-list-item icon-yes">ANDROID AND IOS SUPPORT</li>
+            <li class="pricing-card-list-item icon-yes">ONE TIME PAYMENT</li>
+            <li class="pricing-card-list-item icon-no">-</li>
+            <li class="pricing-card-list-item icon-no">-</li>
+
+          </ul>
+          <p class="pricing-card-price">$40<span class="pricing-card-price-text">/mo</span></p>
+          <button class="pricing-card-btn">Buy</button>
+        </div>
+        <div class="pricing-card ">
+            <h3 class="pricing-card-heading pricing-card-heading-premium">PREMIUM</h3>
+            <ul class="pricing-card-list">
+              <li class="pricing-card-list-item icon-yes">SINGLE SIDE DESIGN</li>
+              <li class="pricing-card-list-item icon-yes">QR CODE DISABLED</li>
+              <li class="pricing-card-list-item icon-yes">NO DASHBOARD ACCESS</li>
+              <li class="pricing-card-list-item icon-yes">ANDROID AND IOS SUPPORT</li>
+              <li class="pricing-card-list-item icon-yes">ONE TIME PAYMENT</li>
+              <li class="pricing-card-list-item icon-yes">PREMIUM DESIGN ACCESS</li>
+              <li class="pricing-card-list-item icon-yes">UP TO 50 CARDS ACCESS</li>
+            </ul>
+            <p class="pricing-card-price">$40<span class="pricing-card-price-text">/mo</span></p>
+            <button class="pricing-card-btn">Buy</button>
+          </div>
+        <div class="pricing-card pricing-card-highlight">
+          <h3 class="pricing-card-heading pricing-card-heading-lite">BUSINESS</h3>
+          <ul class="pricing-card-list">
+            <li class="pricing-card-list-item icon-yes">DUAL SIDE DESIGN</li>
+            <li class="pricing-card-list-item icon-yes">QR ENABLED</li>
+            <li class="pricing-card-list-item icon-yes">DASHBOARD ACCESS</li>
+            <li class="pricing-card-list-item icon-yes">ANDROID AND IOS SUPPORT</li>
+            <li class="pricing-card-list-item icon-yes">ONE TIME PAYMENT</li>
+            <li class="pricing-card-list-item icon-yes">PREMIUM DESIGN ACCESS</li>
+            <li class="pricing-card-list-item icon-yes">UP TO 50-150 CARDS ACCESS</li>
+
+          </ul>
+          <p class="pricing-card-price">$90<span class="pricing-card-price-text">/mo</span></p>
+          <button class="pricing-card-btn">Buy</button>
+        </div>
+        <div class="pricing-card">
+          <h3 class="pricing-card-heading pricing-card-heading-pro">PRO</h3>
+          <ul class="pricing-card-list">
+            <li class="pricing-card-list-item icon-yes">DUAL SIDE DESIGN</li>
+            <li class="pricing-card-list-item icon-yes">QR ENABLED</li>
+            <li class="pricing-card-list-item icon-yes">DASHBOARD ACCESS</li>
+            <li class="pricing-card-list-item icon-yes">ANDROID AND IOS SUPPORT</li>
+            <li class="pricing-card-list-item icon-yes">ONE TIME PAYMENT</li>
+            <li class="pricing-card-list-item icon-yes">PREMIUM DESIGN ACCESS</li>
+            <li class="pricing-card-list-item icon-yes">UP TO 150-500 CARDS ACCESS</li>
+          </ul>
+          <p class="pricing-card-price">$150<span class="pricing-card-price-text">/mo</span></p>
+          <button class="pricing-card-btn">Buy</button>
+        </div>
+      </div>
+
+</section>
+
+
+<!-- section price end -->
+
+
+
+<!-- styles start -->
+
+<!-- <section>
+    <div class="p-3">
+<div class="row">
+
+<div class="col-md-6">
+    <div class="p-5">
+<h1>Tailor-Made Options to Choose What Suits You</h1>
+</div>
+</div>
+
+<div class="col-md-6">
+
+   
+
+</div>
+
+</div>
+    </div>
+</section> -->
+
+
+<!-- styles end -->
+
+        <!-- Call to action section-->
+        <section class="cta" data-aos="zoom-out-left" data-aos-duration="1000">
+            <div class="cta-content">
+                <div class="container px-5">
+                    <h2 class="text-white display-1 lh-1 mb-4">
+                        Ready to explore the convenience of Smart NFC Business Cards?
+                    </h2>
+                    <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="" target="_blank">CONTACT US</a>
+                </div>
+            </div>
+        </section>
+
+<!-- faq section start -->
+
+<div class="accordion">
+    <h1>Frequently Asked Questions</h1>
+    <div class="accordion-item">
+        <input type="checkbox" id="accordion1">
+        <label for="accordion1" class="accordion-item-title"><span class="icon"></span>How can I share my business card using the InfoIDz digital business card??</label>
+        <div class="accordion-item-desc">InfoIDz offers digital business cards that incorporate Near Field Communication (NFC) technology; thus, they are known as NFC business cards. You can share your NFC business card by tapping it on any device that supports NFC, such as smartphones.</div>
+    </div>
+
+    <div class="accordion-item">
+        <input type="checkbox" id="accordion2">
+        <label for="accordion2" class="accordion-item-title"><span class="icon"></span>Where can I buy affordable NFC business cards?</label>
+        <div class="accordion-item-desc">You can buy the best-quality and most affordable NFC business cards in Dubai from InfoIDz, the leading supplier of smart NFC digital business cards in the UAE.</div>
+    </div>
+
+    <div class="accordion-item">
+        <input type="checkbox" id="accordion3">
+        <label for="accordion3" class="accordion-item-title"><span class="icon"></span>How do I use my NFC business card?</label>
+        <div class="accordion-item-desc">NFC business cards are used to share your contact details with other devices. It is a very simple and convenient way to use it with just a single tap on devices that support NFC. The recipient can save the details or share them via social media platforms such as WhatsApp, Instagram, etc.</div>
+    </div>
+
+    <div class="accordion-item">
+        <input type="checkbox" id="accordion4">
+        <label for="accordion4" class="accordion-item-title"><span class="icon"></span>Can I customize my smart business card?</label>
+        <div class="accordion-item-desc">Yes, you can customize your NFC business cards according to your specific requirements. You can choose the details to be included in the card.</div>
+    </div>
+
+    <div class="accordion-item">
+        <input type="checkbox" id="accordion5">
+        <label for="accordion5" class="accordion-item-title"><span class="icon"></span>Where can I use my digital business card?</label>
+        <div class="accordion-item-desc">You can use your digital business card on all devices that support NFC. You can tap it on all smartphones with Android OS or iOS.</div>
+    </div>
+
+</div>
+
+
+
+<!-- faq section end -->
+        <!-- App badge section-->
+        <section class="bg-gradient-primary-to-secondary" id="download">
+            <div class="container px-5">
+                <h2 class="text-center text-white font-alt mb-4">A New Way To Share Your Business Digitally!</h2>
+        
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-black text-center py-5">
+            <div class="container px-5">
+                <div class="text-white-50 small">
+                    <div class="mb-2">&copy; INFOIDZ 2024. All Rights Reserved.</div>
+                    <a href="#!">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">FAQ</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Feedback Modal-->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-primary-to-secondary p-4">
+                        <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Get a quote</h5>
+                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-0 p-4">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <label for="name">Full name</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            </div>
+                            <!-- Email address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <label for="email">Email address</label>
+                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            </div>
+                            <!-- Phone number input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                <label for="phone">Phone number</label>
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            </div>
+                            <!-- Message input-->
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <label for="message">Message</label>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                            </div>
+                            <!-- Submit success message-->
+                            <!---->
+                            <!-- This is what your users will see when the form-->
+                            <!-- has successfully submitted-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Form submission successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a href=""></a>
+                                </div>
+                            </div>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit" style="padding: 0rem .5rem;">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="https://underdogsitalia.com/wp-content/themes/underdogs/js/libraries.js?ver=20151215"></script>
+        <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+        <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+        <script src="https://codepen.io/GreenSock/pen/vYbbEMa.js">
+
+        </script>
+          <script src="{% static 'app/js/forms.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+        <script src="{% static 'app/js/scripts.js' %}"></script>
+        <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+      <script src="{%static 'app/js/main.js' %}"></script>
+      <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'app/js/popper.min.js' %}"></script>
+      <script src="{% static 'app/js/jquery-3.3.1.min.js' %}"></script>
+  
+
+
+        <script>
+            $(document).ready(function() {
+                // Hide all detailed plans except the first one
+                $(".detailed-plans").not(":first").hide();
+            
+                // Add active class to the first row initially
+                $(".plan-header:first").addClass("pr-active");
+            
+                // Toggle detailed plans on click
+                $(".plan-header").click(function() {
+                    // Hide all other detailed plans
+                    $(".detailed-plans").not($(this).next(".detailed-plans")).slideUp();
+                    
+                    // Remove active class from all rows
+                    $(".plan-header").removeClass("pr-active");
+                    
+                    // Toggle the clicked detailed plan
+                    $(this).next(".detailed-plans").slideToggle();
+                    
+                    // Add active class to the clicked row
+                    $(this).addClass("pr-active");
+                });
+            });
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    AOS.init();
+                });
+            </script>
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var sections = document.querySelectorAll('.col-row');
+    var index = 0;
+
+    function showNextSection() {
+      if (index < sections.length) {
+        sections[index].classList.add('visible');
+        index++;
+      }
+    }
+
+    // Show each section with a delay
+    var delay = 1000; // Adjust delay as needed
+    var interval = setInterval(showNextSection, delay);
+
+    // Clear interval when all sections are shown
+    setTimeout(function() {
+      clearInterval(interval);
+    }, delay * sections.length);
+  });
+   </script>
+
+<script>
+const parallax = document.getElementById("parallax");
+
+// Parallax Effect for DIV 1
+window.addEventListener("scroll", function () {
+  let offset = window.pageYOffset;
+  parallax.style.backgroundPositionY = offset * 0.7 + "px";
+  // DIV 1 background will move slower than other elements on scroll.
+});
+
+</script>
+
+
+    </body>
+</html>

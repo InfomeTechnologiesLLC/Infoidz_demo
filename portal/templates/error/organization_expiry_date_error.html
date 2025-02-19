@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>INFOTAG</title>
+    {% include 'includes/portal-header.html' %}
+
+  </head>
+  <body>
+
+   
+    <div class="row justify-content-center d-flex align-items-center" style="height: 90vh; width: 100%;" >
+
+    
+    <div class="card p-4 shadow rounded-10 border border-danger w-50 ">
+        <div class="row">
+            <h3 class="text-danger col-12 text-center">Activation is expired</h3>
+            <p class="col-12 text-center">Your plan activation has expired. Please renew your subscription to continue accessing our services. For assistance or to renew your plan, please contact our support team.</p>
+           
+            <div class="row text-center col-12 justify-content-center">
+               <div class="col-12">
+                <a class="btn btn-success col-6 rounded-pill" href="mailto:sales@infomeuae.com">Contact as</a>
+                </div>
+                <div class="col-12 mt-2">
+                <a class=" col-2" href="{% url 'login_page' %}">Login</a>
+                </div>
+            </div>
+               
+        </div>
+    </div>
+    </div>
+    {% include 'includes/portal-footer.html' %}
+
+    <script>
+        
+            const urlParams = new URLSearchParams(window.location.search);
+
+
+            if (urlParams.get('from') == 'login-success'){
+                iziToast.warning({
+                    title: 'Logged',
+                    message: 'You have successfully logged in , But your plan is expired',
+                });
+                urlParams.delete('from','1')
+
+                window.history.replaceState({},"",'/portal/plan-expired')
+            }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+<tr>
+  <td style="display: none;">{{entrie.id}}</td>
+  <td class="text-center"> <a href="{% url 'portal:profile' entrie.id %}"> <img class="rounded-circle" loading="lazy" style="width: 50px; height: 50px;" src="{% if entrie.profile_pic_thumbnail.url != '' %} {{ entrie.profile_pic_thumbnail.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}" alt=""></a>
+  </td>
+   
+    <td class="text-center" id="created-at">{{entrie.created_at|date:"d-m-Y"}}</td>
+    <td id="name">{{entrie.name}}</td>
+    <td id="personal-number">
+    
+      <i class="fa-solid fa-mobile-screen-button"></i> <span> {{entrie.personal_number}}</span><br>
+      <!-- <i class="fa-regular fa-building"></i> <span> {% if entrie.office_number != None %} {{entrie.office_number}} {% else %} - {% endif %}</span><br>
+      <i class="fa-brands fa-whatsapp"> </i> <span> {% if entrie.whatsapp_number != None %} {{entrie.whatsapp_number}} {% else %} - {% endif %} </span><br> -->
+
+    </td>
+    <td id="contact-link" data-link="{% url 'card-page' entrie.url_slug %}" >
+      <a href="{% url 'card-page' entrie.url_slug %}" style="text-decoration: none; font-size: 12px;" class="text-decoration-none icon-size-large mx-1 cursor-pointer" target="_blank">
+        https://demo.infoidz.com{% url 'card-page' entrie.url_slug %}
+      </a>
+  </td>
+  
+    
+    <td >
+      <!-- <div class="d-flex justify-content-center"> -->
+        <div class="d-flex justify-content-center">
+          <a href="{% url 'card-page' entrie.url_slug %}" class="text-decoration-none icon-size-large mx-1 cursor-pointer" target="_blank">  <i class="typcn typcn-eye" ></i> </a>
+          <a link="{% url 'card-page' entrie.url_slug %}" class="text-decoration-none icon-size-large mx-1 text-success cursor-pointer" target="_blank" onclick="copyContactLink(this)">  <i class="typcn typcn-link-outline"></i></a>
+          <a href="{% url 'portal:contact-entries-edit' %}?edit-id={{entrie.id}}" class="text-decoration-none icon-size-large mx-1 text-warning"  > <i class="typcn typcn-edit" >  </i></a>
+          <a class="typcn typcn-trash contact-entire-btn text-danger text-decoration-none icon-size-large mx-1 cursor-pointer"  entire-id="{{entrie.id}}" onclick="onDelteEntrie(this)" >  </a>
+          {% if entrie.card.id != 1 and entrie.card.id != 2 and entrie.card.id != 6 and entrie.card.id != 7 and entrie.card.id != 8 and entrie.card.id != 9 and entrie.card.id != 10 and entrie.card.id != 11 and entrie.card.id != 12 and entrie.card.id != 13 %}
+          <a href="{% url 'preview_card' card_id=entrie.card.id %}?edit_id={{ entrie.id }}" class="text-decoration-none icon-size-large mx-1 text-secondary"><i class="typcn typcn-tabs-outline"></i></a>
+          {% endif %}
+          <a href="nfc://demo.infoidz.com/app/card/{{ entrie.url_slug }}" 
+   class="text-decoration-none icon-size-large mx-1 text-primary cursor-pointer"
+   onclick="WriteStatus(event, this, '{{ entrie.id }}')">
+    <i class="typcn typcn-arrow-forward-outline"></i>  
+</a>
+
+        <a href="{% url 'portal:contact_email_signature' entrie.id %}"  class="text-decoration-none icon-size-large mx-1 text-success cursor-pointer">
+          <i class="typcn typcn-credit-card"></i>    
+      </a>
+
+        </div>
+      
+      
+    <!-- </div> -->
+    </td>
+    <td>{% if entrie.writed == 1  %} <label class="badge badge-success"> Writed </label>{% else %} <label class="badge badge-danger"> Not Writed </label> {% endif %}</td>
+  </tr>

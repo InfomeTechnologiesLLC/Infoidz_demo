@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Business Card</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'app/css/card_preview.css' %}">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: "Nunito", serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center; /* Centers horizontally */
+      align-items: center;    /* Centers vertically */
+      height: 100vh;
+    }
+
+    .background-container {
+      width: 100%; /* Full width */
+      max-width: 400px; /* Limit the size for desktop view */
+      height: auto; /* Adjust height automatically */
+      background-image: url("{% static 'new_app/assets/images/red-black-vectorbg.png' %}");
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      color: rgb(221, 221, 221);
+      text-align: center;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 80%;
+      max-width: 300px;
+      height: auto;
+      border: 3px solid white;
+      border-radius: 50%;
+      margin-top: 20px;
+      background-color: white;
+    }
+
+    .name-info {
+      width: 100%;
+    }
+
+    .name {
+      margin-top: 15px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .designation {
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    .contact-info p {
+      display: flex;
+      color: darkslategrey;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .contact-info i {
+      margin-right: 10px; /* Space between icon and text */
+      color: white;
+      font-size: 1.2rem; /* Adjust icon size */
+    }
+
+    .add-contact-btn {
+      background-color: #000000;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      width: 80%;
+    }
+
+    .add-contact-btn:hover {
+      background-color: #e35b50;
+    }
+
+    .social-media a {
+      font-size: 1.5rem;
+      color: rgb(64, 64, 64);
+      margin: 10px;
+      text-decoration: none;
+    }
+
+    .social-media a:hover {
+      color: #ff6f61;
+    }
+  </style>
+</head>
+<body>
+  {% include 'card/includes/business_content.html' %}
+  {% include 'card/pop_up.html' %}
+</body>
+</html>

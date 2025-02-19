@@ -1,0 +1,88 @@
+.btn-loader {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    animation: rot5 1s infinite;
+  }
+  .btn-primary{
+    box-shadow: 0px 3px 0px 0px #658bff;
+    border-radius: 5px ;
+  }
+  .btn-danger{
+    box-shadow: 0px 3px 0px 0px #ff6565 ;
+    border-radius: 5px ;
+  }
+  .btn-success{
+
+    box-shadow: 0px 3px 0px 0px #7eff85 ;
+    border-radius: 5px ;
+  }
+  .btn-secondary{
+
+    box-shadow: 0px 3px 0px 0px #969696 ;
+    border-radius: 5px ;
+  }
+
+  @keyframes rot5 {
+    0% {
+      transform: rotate(0);
+    }
+  
+    50% {
+      transform: rotate(180deg);
+      border-top-color: rgb(60, 200, 255);
+      border-bottom-color: rgb(101, 155, 255);
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .cursor-pointer{
+    cursor: pointer;
+  }
+  .cursor-pointer-with-scale{
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.3s ease ;
+  }
+  .cursor-pointer-with-scale:hover{
+    filter: brightness(0.6);
+    transform: scale(.95);
+  }
+  .back-icon {
+    transition: transform 0.3s ease; /* Add transition for smooth movement */
+  }
+  .go-back:hover .back-icon {
+    transform: translateX(-5px);
+  }
+
+  .template-style{
+    border-radius: 10px;
+    border:2px ridge rgba(68, 68, 68, 0.273);
+  }
+
+  .template-style:hover{
+    border-radius: 10px;
+  
+    background: linear-gradient(180deg, rgba(159,200,244,0.3) 0%,rgba(159,200,244,0.3) 10%, rgba(159,200,244,0) 100%);
+    animation:template-style-hover 2s ease infinite;
+  }
+
+
+  .template-style.active{
+    box-shadow: 0px 0 8px -3.8px;
+    border-radius: 10px;
+    border:2px ridge rgb(159,200,244);
+    background: linear-gradient(180deg, rgba(159,200,244,0.7) 0%,rgba(159,200,244,0.7) 10%, rgba(159,200,244,0) 100%);
+  }
+
+  .icon-size-large{
+    font-size: x-large;
+  }

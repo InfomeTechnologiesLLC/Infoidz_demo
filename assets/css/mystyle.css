@@ -1,0 +1,36 @@
+
+
+
+
+
+
+
+.btn-loader {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    animation: rot5 1s infinite;
+  }
+  
+  @keyframes rot5 {
+    0% {
+      transform: rotate(0);
+    }
+  
+    50% {
+      transform: rotate(180deg);
+      border-top-color: rgb(60, 200, 255);
+      border-bottom-color: rgb(101, 155, 255);
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

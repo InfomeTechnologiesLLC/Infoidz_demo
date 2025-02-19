@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Analytics Dashboard</title>
+    {% include 'includes/portal-header.html' %}
+    <link rel="stylesheet" href="{% static 'css/data-table.css' %}" />
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+    <style>
+      .analytics-metric {
+        text-align: center;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+      .analytics-metric h3 {
+        margin: 0;
+        color: #333;
+      }
+      .analytics-metric p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'includes/portal-navbar.html' %}
+
+    <div class="az-content az-content-dashboard">
+      <div class="container">
+        <div class="az-content-body">
+          <div class="row mb-4">
+
+            <!-- Analytics Metrics -->
+            {% for obj in total_count %}
+            <div class="col-md-3">
+              <div class="analytics-metric">
+                <h3>{{obj.contact_limit}}</h3>
+                <p>Total Users</p>
+              </div>
+            </div>
+            {% endfor %}
+
+            <div class="col-md-3">
+              <div class="analytics-metric">
+                <h3>{{active_count}}</h3>
+                <p>Active Users</p>
+              </div>
+            </div>
+            
+
+            <div class="col-md-3">
+              <div class="analytics-metric">
+                <h3>{{growth_count}}</h3>
+                <p>Growth Rate</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="analytics-metric">
+                <h3>{{page_view_count}}</h3>
+                <p>Page Views</p>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <!-- Table Section -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive mt-5">
+                <table
+                  class="table table-bordered analyse-table mg-b-0 rounded-10 overflow-hidden"
+                  id="analytics-table"
+                >
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Sign-Up Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in customer_details %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.created_at }}</td>
+                      <td row-id="{{ user.id }}">
+                        <!-- <button class="btn btn-info btn-sm">View</button> -->
+                        <button class="btn btn-danger btn-sm" onclick="onDelteCustomer(this)">Delete</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Export Button -->
+          <div class="row mt-3">
+            <div class="col-md-12 text-right">
+              <button onclick="exportAnalyticsToExcel('xlsx')" class="btn btn-secondary">
+                Export to Excel
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    {% include 'includes/portal-footer.html' %}
+
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+      function exportAnalyticsToExcel(type) {
+        var table = document.getElementById("analytics-table");
+        var wb = XLSX.utils.table_to_book(table, { sheet: "Analytics" });
+        XLSX.writeFile(wb, `Analytics.${type}`);
+      }
+
+  function onDelteCustomer(elm) {
+    iziToast.warning({
+        timeout: false,
+        title: 'Are you sure you want to delete this?',
+        overlay: true,
+        close: false,
+        message: "You can't undo it!",
+        displayMode: 'once',
+     
+        zindex: 10000,
+        position: 'center',
+        buttons: [
+            ['<button><b>No</b></button>', function (instance, toast) {
+     
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+     
+            }, true],
+            
+            ['<button><b>Yes</b></button>', function (instance, toast) {
+     
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                edit_id=$(elm).closest('td').attr('row-id');
+                console.log(edit_id)
+                $.ajax({
+                    type: "POST",
+                    url: "delete-customer-details",
+                    data:{id:edit_id,'csrfmiddlewaretoken':csrf_token} ,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status.success){
+                          $('#analytics-table').DataTable().row($(elm).closest('tr')).remove().draw(false);
+                        }
+                        else{
+                            iziToast.error({
+                                title: 'Error',
+                                message: "something wrong !",
+                                 
+                                position:"bottomCenter",
+                            });
+                        }
+                        
+                    },
+                    error:function (t,r,e) {
+                        iziToast.error({
+                            title: 'Error',
+                            message: e,
+                             
+                            position:"bottomCenter",
+                        });
+                    }
+                });
+     
+            }, true],
+        ],
+    });
+    
+}
+    </script>
+  </body>
+</html>

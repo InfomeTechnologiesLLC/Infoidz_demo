@@ -1,0 +1,232 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Enhanced Email Signature</title>
+    {% include 'includes/portal-header.html' %}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .signature-preview {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        background: #ffffff;
+        margin-top: 20px;
+        position: relative;
+        font-family: Arial, sans-serif;
+        color: #333;
+        overflow: hidden;
+      }
+      .signature-preview img.avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #007bff;
+        margin-bottom: 10px;
+      }
+      .signature-preview .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.2;
+        z-index: 1;
+      }
+      .template-images img {
+        width: 80px;
+        height: 50px;
+        cursor: pointer;
+        margin: 5px;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        transition: 0.3s ease;
+      }
+      .template-images img:hover,
+      .template-images img.selected {
+        border-color: #007bff;
+      }
+      .download-button {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'includes/portal-navbar.html' %}
+
+    <div class="container my-5">
+      <h2 class="mb-4">Create Your Enhanced Email Signature</h2>
+      <div class="row">
+        <!-- Form Section -->
+
+        <div class="col-md-6">
+          <form id="signature-form">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" value="{{data.name}}" class="form-control" id="name" placeholder="John Doe" />
+            </div>
+            <div class="mb-3">
+              <label for="designation" class="form-label">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation"
+                placeholder="Software Engineer"
+                value="{{data.designation}}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="johndoe@example.com"
+                value="{{data.email}}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                placeholder="+1 234 567 890"
+                value="{{data.personal_number}}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="website" class="form-label">Website</label>
+              <input
+                type="url"
+                class="form-control"
+                id="website"
+                placeholder="https://www.example.com"
+                value="{{data.website}}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="profilePic" class="form-label">Profile Picture</label>
+              <input type="file"  class="form-control" id="profilePic" />
+            </div>
+            <div class="mb-3">
+              <label for="backgroundPic" class="form-label">Upload Custom Background</label>
+              <input type="file" class="form-control" id="backgroundPic" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Choose Template Background</label>
+              <div class="template-images d-flex flex-wrap">
+                <img
+                  src="https://a.storyblok.com/f/228452/2600x1734/555392b95f/best-email-signature-designs-2022_1300x867.jpg"
+                  alt="Template 1"
+                  onclick="setTemplateBackground(this)"
+                />
+                <img
+                  src="{% static 'path/to/template2.jpg' %}"
+                  alt="Template 2"
+                  onclick="setTemplateBackground(this)"
+                />
+                <img
+                  src="{% static 'path/to/template3.jpg' %}"
+                  alt="Template 3"
+                  onclick="setTemplateBackground(this)"
+                />
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="downloadSignature()">
+              Download Signature
+            </button>
+            
+          </form>
+        </div>
+
+        <!-- Live Preview Section -->
+
+        <div class="col-md-6">
+          <h5 class="mb-3">Live Preview</h5>
+          <div class="signature-preview" id="signature-preview">
+            <div
+              id="preview-background"
+              class="background"
+              style="display: none; background-image: none;">
+          </div>
+            <img id="preview-img" src="{{data.profile_pic.url }}" class="avatar" />
+            <h5 id="preview-name">{% if data.name %} {{data.name}} {% else %} Johndoe {% endif %}</h5>
+            <p id="preview-designation">{% if data.designation %} {{data.designation}} {% else %} Software Engineer {% endif %}</p>
+            <p>Email: <span id="preview-email">{% if data.email %} {{data.email}} {% else %} johndoe@gmail.com {% endif %}</span></p>
+            <p>Phone: <span id="preview-phone">{% if data.personal_number %} {{data.personal_number}} {% else %} +966 768882222 {% endif %}</span></p>
+            <p>
+              Website: <a id="preview-website" href="{{data.website}}">{% if data.website %} {{data.website}} {% else %} www.webiste.com {% endif %}</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% include 'includes/portal-footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+      // Update Live Preview
+      document.querySelectorAll("#signature-form input").forEach((input) => {
+        input.addEventListener("input", (e) => {
+          const id = e.target.id;
+          const value = e.target.value;
+
+          if (id === "profilePic" && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              document.getElementById("preview-img").src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          } else if (id === "backgroundPic" && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const bg = document.getElementById("preview-background");
+              bg.style.backgroundImage = `url(${event.target.result})`;
+              bg.style.display = "block";
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          } else {
+            document.getElementById(`preview-${id}`).textContent = value;
+
+            if (id === "website") {
+              document.getElementById("preview-website").href = value;
+              document.getElementById("preview-website").textContent = value;
+            }
+          }
+        });
+      });
+
+      // Set Template Background from Templates
+      function setTemplateBackground(template) {
+        document.querySelectorAll(".template-images img").forEach((img) =>
+          img.classList.remove("selected")
+        );
+        template.classList.add("selected");
+        const bg = document.getElementById("preview-background");
+        bg.style.backgroundImage = `url(${template.src})`;
+        bg.style.display = "block";
+      }
+
+      // Download Signature as Image
+      function downloadSignature() {
+        const preview = document.getElementById("signature-preview");
+        html2canvas(preview).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = "email_signature.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      }
+    </script>
+  </body>
+</html>

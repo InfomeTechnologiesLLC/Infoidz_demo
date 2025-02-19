@@ -1,0 +1,9 @@
+project-id/settings.py
+myenv/
+env/
+*.pyc
+/migrations/
+app/__pycache__/*
+__pycache__/
+node_modules
+node_modules

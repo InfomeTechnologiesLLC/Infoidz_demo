@@ -1,0 +1,94 @@
+{% load static %}
+<div id="webcrumbs">
+    <div
+      class="w-[400px] bg-gradient-to-b from-primary-200 via-primary-100 to-white shadow-xl rounded-lg"
+    >
+      <div class="relative">
+        <div
+          style="
+             background-image: url('https://img.freepik.com/free-photo/high-angle-desktop-with-laptop-copy-space_23-2148430882.jpg');
+             background-size: cover;
+            background-position: center;
+          "
+          class="h-[150px] rounded-t-lg"
+        ></div>
+        <div class="absolute top-[100px] left-1/2 transform -translate-x-1/2">
+          <img
+            src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}"
+            alt="Profile"
+            class="w-[100px] h-[100px] rounded-full border-4 border-blue-300 shadow-lg bg-white"
+          />
+        </div>
+      </div>
+      <div class="px-6 pt-16 pb-6 text-center">
+        {% if entry.name != None %}
+        <h1 class="text-xl font-title text-neutral-950 font-bold">
+          {{entry.name}}
+        </h1>
+        {% endif %}
+
+        {% if entry.designation != None %}
+        <p class="text-sm text-neutral-600">{{entry.designation}}</p>
+        {% endif %}
+        {% if entry.email != None %}
+        <a href="mailto:{{entry.email}}" class="text-decoration-none"><p class="text-sm text-neutral-600">{{entry.email}}</p></a>
+        {% endif %}
+        {% if entry.personal_number != None %}
+        <a href="tel:{{entry.personal_number}}" class="text-decoration-none"><p class="text-sm text-neutral-600">{{entry.personal_number}}</p></a>
+        {% endif %}
+        {% if entry.location != None %}
+        <p class="text-sm text-neutral-600">{{entry.location}}</p>
+        {% endif %}
+        {% if entry.website %}
+        <a href="{{entry.website}}" target="_blank"><h2 class="text-lg font-semibold text-neutral-950 mt-6">{{entry.website}}</h2></a>
+        {% endif %}
+        <p class="text-sm text-neutral-600">Website</p>
+        <!-- {% if entry.about_me != None %}
+        <h2 class="text-lg font-semibold text-neutral-950 mt-4">
+          Description
+        </h2>
+        <p class="text-sm text-neutral-600">
+          {{entry.about_me}}
+        </p>
+        {% endif %} -->
+        <div class="flex justify-center mt-4 gap-4">
+            <a href="https://api.whatsapp.com/send/?phone={{entry.whatsapp_number}}"
+            class="text-neutral-950 hover:text-primary-600"
+            target="_blank" style="color: black;"><i class="fa-brands fa-whatsapp text-xl">
+            </i></a>
+            {% for i in social_medias %}
+            {% if i.social_media.name == 'Twitter'%}
+          <a href="{{i.link}}" class="text-neutral-950 hover:text-primary-600">
+            <i class="fa-brands fa-twitter text-xl"></i>
+          </a>
+          {% endif %}
+          {% if i.social_media.name == 'Facebook'%}
+          <a href="{{i.link}}" class="text-neutral-950 hover:text-primary-600">
+            <i class="fa-brands fa-facebook text-xl"></i>
+          </a>
+          {% endif %}
+          {% if i.social_media.name == 'Linkedin'%}
+          <a href="{{i.link}}" class="text-neutral-950 hover:text-primary-600">
+            <i class="fa-brands fa-linkedin text-xl"></i>
+          </a>
+          {% endif %}
+          {% if i.social_media.name == 'Instagram'%}
+          <a href="#" class="text-neutral-950 hover:text-primary-600">
+            <i class="fa-brands fa-instagram text-xl"></i>
+          </a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <div class="flex justify-center mt-6">
+        
+            
+          <button class="w-full bg-primary-500 text-white px-6 py-2 rounded-md text-sm font-semibold shadow-md hover:bg-primary-600 transition-all">
+            <a
+            href="{% url 'getvcard' entry.url_slug %}"
+            
+            style="border: none">    Save Contact</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

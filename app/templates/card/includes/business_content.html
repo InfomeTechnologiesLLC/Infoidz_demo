@@ -1,0 +1,68 @@
+{% load static %}
+<div class="background-container">
+    <!-- Profile Image -->
+    <img style="width:250px; height:250px;" src="{% if entry.profile_pic.url != '' %} {{ entry.profile_pic.url}} {% else %} {% static 'img/grey-profile.png' %} {% endif %}" 
+         alt="John Doe's Profile Photo" 
+         class="profile-img">
+    
+    <!-- Name and Designation -->
+    <div class="name-info">
+        {% if entry.name != None %}
+        <h4 class="name">{{ entry.name }}</h4>
+        {% endif %}
+        {% if entry.designation != None %}
+        <p class="designation">{{ entry.designation }}</p>
+        {% endif %}
+    </div>
+
+    <div class="contact-info">
+      {% if entry.email != None %}
+      <p>
+          <a style="text-decoration: none; color: white;" href="mailto:{{ entry.email }}" class="contact-link">
+              <i class="bi bi-envelope" style="margin-right: 8px;"></i> {{ entry.email }}
+          </a>
+      </p>
+      {% endif %}
+      {% if entry.personal_number != None %}
+      <p>
+          <a style="text-decoration: none; color: white;" href="tel:{{ entry.personal_number }}" class="contact-link">
+              <i class="bi bi-telephone" style="margin-right: 8px;"></i> {{ entry.personal_number }}
+          </a>
+      </p>
+      {% endif %}
+      {% if entry.website != None %}
+      <p>
+          <a style="text-decoration: none; color: white;" href="{{ entry.website }}" target="_blank" class="contact-link">
+              <i class="bi bi-globe" style="margin-right: 8px;"></i> {{ entry.website }}
+          </a>
+      </p>
+      {% endif %}
+  </div>
+
+    <!-- Social Media Links -->
+    <div class="social-media">
+        {% for i in social_medias %}
+        {% if i.social_media.name == 'Facebook' %}
+        <a href="{{ i.link }}" target="_blank" class="bi bi-facebook"></a>
+        {% endif %}
+        {% if i.social_media.name == 'Twitter' %}
+        <a href="{{ i.link }}" target="_blank" class="bi bi-twitter"></a>
+        {% endif %}
+        {% if i.social_media.name == 'Linkedin' %}
+        <a href="{{ i.link }}" target="_blank" class="bi bi-linkedin"></a>
+        {% endif %}
+        {% if i.social_media.name == 'Instagram' %}
+        <a href="{{ i.link }}" target="_blank" class="bi bi-instagram"></a>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Contact Info -->
+
+
+    <!-- Add to Contact Button -->
+    <a class="add-contact-btn" style="text-decoration: none;" href="{% url 'getvcard' entry.url_slug %}">Add to Contact</a>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
