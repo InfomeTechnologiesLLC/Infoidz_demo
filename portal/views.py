@@ -1,3 +1,4 @@
+import io
 import re
 from django.shortcuts import get_object_or_404, render , HttpResponse , redirect
 from django.contrib.auth.models import User
@@ -20,6 +21,8 @@ from PIL import Image
 from io import BytesIO
 from smartcard.System import readers
 import smartcard
+import qrcode
+from qrcode.image.svg import SvgImage
 import segno
 
 
