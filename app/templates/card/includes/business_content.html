@@ -10,6 +10,9 @@
         {% if entry.name != None %}
         <h4 class="name">{{ entry.name }}</h4>
         {% endif %}
+        {% if entry.company_name != None %}
+        <p class="company-name">{{ entry.company_name }}</p>
+        {% endif %}
         {% if entry.designation != None %}
         <p class="designation">{{ entry.designation }}</p>
         {% endif %}

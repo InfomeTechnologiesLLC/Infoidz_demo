@@ -23,6 +23,20 @@
       </div>
       <div class="px-6 mt-6">
         <div
+        class="flex items-center justify-between text-sm text-neutral-600 mb-3"
+      >
+        <span
+          class="flex gap-2 items-center text-neutral-950 font-semibold"
+        >
+        <span class="material-symbols-outlined">
+          apartment
+          </span> Company
+        </span>
+        {% if entry.company_name != None %}
+        <span class="text-neutral-600">{{entry.company_name}}</span>
+        {% endif %}
+      </div>
+        <div
           class="flex items-center justify-between text-sm text-neutral-600 mb-3"
         >
           <span

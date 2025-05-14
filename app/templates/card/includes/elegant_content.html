@@ -21,6 +21,11 @@
             {% if entry.name != None %}
           <h1 class="font-title text-xl">{{entry.name}}</h1>
           {% endif %}
+          {% if entry.company_name != None %}
+          <p class="text-neutral-100 text-sm">
+           {{entry.company_name}}
+          </p>
+          {% endif %}
           {% if entry.designation != None %}
           <p class="text-neutral-100 text-sm">
            {{entry.designation}}
