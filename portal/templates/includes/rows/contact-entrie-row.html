@@ -13,11 +13,21 @@
       <i class="fa-brands fa-whatsapp"> </i> <span> {% if entrie.whatsapp_number != None %} {{entrie.whatsapp_number}} {% else %} - {% endif %} </span><br> -->
 
     </td>
+    <td>
+      {% if entrie.qr_code %}
+    <a href="{{ entrie.qr_code.url }}" download="contact_qr_{{ entrie.id }}.png" class="qr-download-link">
+        <span>Download QR Code</span>
+    </a>
+{% else %}
+    <span class="no-qr">QR Code not available</span>
+{% endif %}
+    </td>
     <td id="contact-link" data-link="{% url 'card-page' entrie.url_slug %}" >
       <a href="{% url 'card-page' entrie.url_slug %}" style="text-decoration: none; font-size: 12px;" class="text-decoration-none icon-size-large mx-1 cursor-pointer" target="_blank">
         https://demo.infoidz.com{% url 'card-page' entrie.url_slug %}
       </a>
   </td>
+
   
     
     <td >
@@ -27,9 +37,7 @@
           <a link="{% url 'card-page' entrie.url_slug %}" class="text-decoration-none icon-size-large mx-1 text-success cursor-pointer" target="_blank" onclick="copyContactLink(this)">  <i class="typcn typcn-link-outline"></i></a>
           <a href="{% url 'portal:contact-entries-edit' %}?edit-id={{entrie.id}}" class="text-decoration-none icon-size-large mx-1 text-warning"  > <i class="typcn typcn-edit" >  </i></a>
           <a class="typcn typcn-trash contact-entire-btn text-danger text-decoration-none icon-size-large mx-1 cursor-pointer"  entire-id="{{entrie.id}}" onclick="onDelteEntrie(this)" >  </a>
-          {% if entrie.card.id != 1 and entrie.card.id != 2 and entrie.card.id != 6 and entrie.card.id != 7 and entrie.card.id != 8 and entrie.card.id != 9 and entrie.card.id != 10 and entrie.card.id != 11 and entrie.card.id != 12 and entrie.card.id != 13 %}
-          <a href="{% url 'preview_card' card_id=entrie.card.id %}?edit_id={{ entrie.id }}" class="text-decoration-none icon-size-large mx-1 text-secondary"><i class="typcn typcn-tabs-outline"></i></a>
-          {% endif %}
+         
           <a href="nfc://demo.infoidz.com/app/card/{{ entrie.url_slug }}" 
    class="text-decoration-none icon-size-large mx-1 text-primary cursor-pointer"
    onclick="WriteStatus(event, this, '{{ entrie.id }}')">

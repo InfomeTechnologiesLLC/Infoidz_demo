@@ -46,10 +46,6 @@ function SubmitNewContact(e) {
     var card_id = $('.template-style.active').attr('card-id');
     var _formData = new FormData($(e.target)[0]);
 
-    // var croppedProfilePic = $('#cropped-profile-pic').cropper('getCroppedCanvas').toDataURL('image/jpeg'); 
-
-
-    // _formData.append('cropped-profile-pic', croppedProfilePic);
     _formData.append('social_links', JSON.stringify(social_medias_array));
     _formData.append('card-id', card_id);
     _formData.append('csrfmiddlewaretoken', csrf_token);
@@ -64,36 +60,8 @@ function SubmitNewContact(e) {
         success: function (response) {
             if (response.success) {
                 let entry_id = response.entry_id;
-
-                var cardIdInt = parseInt(card_id, 10);
-
-                if (cardIdInt !== 1 && cardIdInt !== 2 && cardIdInt !== 3 &&  cardIdInt !== 4 && cardIdInt !== 5 && cardIdInt !== 6 && cardIdInt !== 7 && cardIdInt !== 8 && cardIdInt !== 9 && cardIdInt !== 10 && cardIdInt !== 11 && cardIdInt !== 12) {
-                    iziToast.question({
-                        timeout: false,
-                        overlay: true,
-                        displayMode: 'once',
-                        id: 'question',
-                        zindex: 99999,
-                        title: 'Do you want to customize the card?',
-                        message: 'The details have been saved. Would you like to preview or go back to the table?',
-                        position: 'center',
-                        buttons: [
-                            ['<button><b>Yes, Preview</b></button>', function (instance, toast) {
-                                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                                window.location.href = `/app/preview-card/${card_id}?edit_id=${entry_id}`;
-                            }, true],
-                            ['<button>No, Go to Table</button>', function (instance, toast) {
-                                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                                window.location.href = '/portal/contact-entries?from=submission-success';
-                            }]
-                        ]
-                    });
-                }
-                else {
-                    window.open(`/app/preview-card/${card_id}?edit_id=${entry_id}`, '_blank');
-                    window.location.href = '/portal/contact-entries?from=submission-success';
-                }
-
+                window.open(`/app/preview-card/${card_id}?edit_id=${entry_id}`, '_blank');
+                window.location.href = '/portal/contact-entries?from=submission-success';
             } else {
                 iziToast.error({
                     timeout: false,
@@ -228,37 +196,9 @@ function SubmitEditContact(e) {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                var cardIdInt = parseInt(card_id, 10);
-                if (cardIdInt !== 1 && cardIdInt !== 2 && cardIdInt !== 3 && cardIdInt !== 4 && cardIdInt !== 5 && cardIdInt !== 6 && cardIdInt !== 7 && cardIdInt !== 8 && cardIdInt !== 9 && cardIdInt !== 10 && cardIdInt !== 11 && cardIdInt !== 12) {
-                    iziToast.question({
-                        timeout: false,
-                        overlay: true,
-                        close: false,
-                        displayMode: 'once',
-                        zindex: 99999,
-                        title: 'Success',
-                        message: 'Do you want to customize the card?',
-                        position: 'center',
-                        buttons: [
-                            ['<button><b>Yes</b></button>', function (instance, toast) {
-                                var editId = $(e.target).attr('edit-id');
-                                var previewUrl = `/app/preview-card/${card_id}/?edit_id=${editId || ''}`;
-                                window.location.href = previewUrl;
-                                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                            }, true],  
-                            ['<button>No</button>', function (instance, toast) {
-                                window.location.href = '/portal/contact-entries?from=edit-submission-success';
-                                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                            }]
-                        ],
-                    });
-                }
-                else {
-                    var editId = $(e.target).attr('edit-id');
-                    window.open(`/app/preview-card/${card_id}/?edit_id=${editId || ''}`, '_blank')
-                    window.location.href = '/portal/contact-entries?from=edit-submission-success';
-                }
-
+                var editId = $(e.target).attr('edit-id');
+                window.open(`/app/preview-card/${card_id}/?edit_id=${editId || ''}`, '_blank');
+                window.location.href = '/portal/contact-entries?from=edit-submission-success';
                 $(e.target)[0].reset();
             } else {
                 iziToast.error({

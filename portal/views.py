@@ -20,6 +20,7 @@ from PIL import Image
 from io import BytesIO
 from smartcard.System import readers
 import smartcard
+import segno
 
 
 ####PAGES
@@ -119,53 +120,71 @@ def user_logout(request):
     return redirect('portal:login_page')
 
 def submit_new_contact(request):
-    name = request.POST.get('name')
-    personal_number = request.POST.get('personal-number') 
-    office_number = request.POST.get('office-number')
-    designation = request.POST.get('designation-name')
-    company_name = request.POST.get('company-name')
-    whatsapp = request.POST.get('whatsapp-number')
-    e_mail = request.POST.get('email-id')
-    web_site = request.POST.get('website')
-    location = request.POST.get('location')
-    address = request.POST.get('address')
-    card_id = request.POST.get('card-id')
-    email2 = request.POST.get('email-id-2')   
-    
-    profile_pic = request.POST.get('cropped-profile-pic')  
-    business_card = request.FILES.get('business-card')
-    
-    if profile_pic:
-        try:
-            format, imgstr = profile_pic.split(';base64,')  
-            ext = format.split('/')[1]  
-            img_data = base64.b64decode(imgstr)  
-            
-            profile_pic_file = ContentFile(img_data, name=f'profile_pic.{ext}')
-        except Exception as e:
-            return JsonResponse({'success': False, 'reason': str(e)})
-    else:
-        profile_pic_file = None  
-    
-    personal_number = None if personal_number == '' else personal_number
-    office_number = None if office_number == '' else office_number
-    designation = None if designation == '' else designation
-    company_name = None if company_name == '' else company_name
-    whatsapp = None if whatsapp == '' else whatsapp.replace('+', '') 
-    e_mail = None if e_mail == '' else e_mail
-    email2 = None if email2 == '' else email2
-    location = None if location == '' else location
-    address = None if address == '' else address
-    web_site = None if web_site == '' else (web_site if web_site.startswith(('http://', 'https://')) else f'https://{web_site}')
-    
-    url_slug = generate_contact_url_slug()
-
     try:
+        # Get all fields from POST data
+        id = request.POST.get('id')
+        name = request.POST.get('name')
+        personal_number = request.POST.get('personal-number')
+        office_number = request.POST.get('office-number')
+        designation = request.POST.get('designation-name')
+        company_name = request.POST.get('company-name')
+        whatsapp = request.POST.get('whatsapp-number')
+        e_mail = request.POST.get('email-id')
+        email2 = request.POST.get('email-id-2')
+        web_site = request.POST.get('website')
+        location = request.POST.get('location')
+        address = request.POST.get('address')
+        card_id = request.POST.get('card-id')
+        
+        # Handle file uploads
+        profile_pic = request.POST.get('cropped-profile-pic')
+        business_card = request.FILES.get('business-card')
+        profile_pic_file = None
+
+        # Process profile picture if provided
+        if profile_pic:
+            try:
+                format, imgstr = profile_pic.split(';base64,')
+                ext = format.split('/')[-1]
+                img_data = base64.b64decode(imgstr)
+                profile_pic_file = ContentFile(img_data, name=f'profile_pic.{ext}')
+            except Exception as e:
+                return JsonResponse({'success': False, 'reason': 'Invalid profile image: ' + str(e)})
+        elif 'profile-pic' in request.FILES:
+            profile_pic_file = request.FILES['profile-pic']
+
+        # Normalize fields
+        personal_number = personal_number or None
+        office_number = office_number or None
+        whatsapp = whatsapp or None
+        designation = designation or None
+        company_name = company_name or None
+        e_mail = e_mail or None
+        email2 = email2 or None
+        location = location or None
+        address = address or None
+        web_site = web_site or None
+        
+        # Format WhatsApp number and website URL
+        if whatsapp:
+            whatsapp = whatsapp.replace('+', '')
+        
+        if web_site and not web_site.startswith(('http://', 'https://')):
+            web_site = f'https://{web_site}'
+
+        # Check contact limit
         if ContactEntries.objects.filter(active=True).count() >= request.user.profile.organization.contact_limit:
-            return JsonResponse({'success': False, 'reason': "You've reached the contact limit. Unable to add more", 'errorCode': 'contact_limit'})
-        
+            return JsonResponse({
+                'success': False,
+                'reason': "You've reached the contact limit. Unable to add more",
+                'errorCode': 'contact_limit'
+            })
+
+        # Generate URL slug and get card
+        url_slug = generate_contact_url_slug()
         _card = cards.objects.get(id=card_id)
-        
+
+        # Create new contact entry
         obj = ContactEntries.objects.create(
             name=name,
             personal_number=personal_number,
@@ -174,33 +193,55 @@ def submit_new_contact(request):
             office_number=office_number,
             whatsapp_number=whatsapp,
             email=e_mail,
+            email2=email2,
             website=web_site,
             location=location,
             address=address,
-            profile_pic=profile_pic_file,  
+            profile_pic=profile_pic_file,
             cover_image=request.FILES.get('cover-image'),
             url_slug=url_slug,
             created_by=request.user,
-            profile_pic_thumbnail=profile_pic_file, 
+            profile_pic_thumbnail=profile_pic_file,
             card=_card,
-            email2=email2
+            business_card=business_card
         )
-        
-        if profile_pic_file:
-            profile_img = Image.open(obj.profile_pic_thumbnail.path)
-            profile_img.thumbnail((80, 80))
-            profile_img.save(obj.profile_pic_thumbnail.path)
 
-        if business_card !=None:
-            obj.business_card=business_card
-        
+        # Process profile picture thumbnails if provided
+        if profile_pic_file:
+            profile_img = Image.open(obj.profile_pic.path)
+            profile_img.thumbnail((1000, 1000))
+            profile_img.save(obj.profile_pic.path)
+
+            profile_img_thumb = Image.open(obj.profile_pic_thumbnail.path)
+            profile_img_thumb.thumbnail((80, 80))
+            profile_img_thumb.save(obj.profile_pic_thumbnail.path)
+
+        # Generate vCard
+        vcard = f"""BEGIN:VCARD
+VERSION:3.0
+N:{name};
+FN:{name}
+ORG:{company_name or ''}
+TEL;TYPE=HOME,VOICE:{personal_number or ''}
+EMAIL;TYPE=INTERNET,PREF:{e_mail or ''}
+END:VCARD"""
+
+        # Generate QR code
+        qr = segno.make(vcard)
+        buffer = io.BytesIO()
+        qr.save(buffer, kind='png', scale=10, border=4)
+        qr_filename = f"qr_{obj.id}.png"
+        obj.qr_code.save(qr_filename, ContentFile(buffer.getvalue()))
         obj.save()
 
-        res = {"success": True, 'entry_id': obj.id}
-    except Exception as e:
-        res = {"success": False, 'errorCode': 'except', 'reason': str(e)}
+        return JsonResponse({
+            'success': True,
+            'entry_id': obj.id,
+            'qr_code_url': obj.qr_code.url if obj.qr_code else None
+        })
 
-    return JsonResponse(res)
+    except Exception as e:
+        return JsonResponse({'success': False, 'errorCode': 'exception', 'reason': str(e)})
 
 def edit_submit_contact(request):
     id = request.POST.get('id')
@@ -217,34 +258,34 @@ def edit_submit_contact(request):
     address = request.POST.get('address')
     card_id = request.POST.get('card-id')
 
-    profile_pic = request.POST.get('cropped-profile-pic') 
+    profile_pic = request.POST.get('cropped-profile-pic')
     business_card = request.FILES.get('business-card')
-    print('business_card',business_card)
     profile_pic_file = None
 
     if profile_pic:
         try:
-            format, imgstr = profile_pic.split(';base64,')  
-            ext = format.split('/')[1]  
-            img_data = base64.b64decode(imgstr)  
-
+            format, imgstr = profile_pic.split(';base64,')
+            ext = format.split('/')[1]
+            img_data = base64.b64decode(imgstr)
             profile_pic_file = ContentFile(img_data, name=f'profile_pic.{ext}')
         except Exception as e:
             return JsonResponse({'success': False, 'reason': str(e)})
-
     elif 'profile-pic' in request.FILES:
         profile_pic_file = request.FILES['profile-pic']
 
-    personal_number = None if personal_number == '' else personal_number
-    office_number = None if office_number == '' else office_number
-    designation = None if designation == '' else designation
-    company_name = None if company_name == '' else company_name
-    whatsapp = None if whatsapp == '' else whatsapp.replace('+', '')
-    e_mail = None if e_mail == '' else e_mail
-    email2 = None if email2 == '' else email2
-    location = None if location == '' else location
-    address = None if address == '' else address
-    web_site = None if web_site == '' else (web_site if web_site.startswith(('http://', 'https://')) else f'https://{web_site}')
+    # Normalize
+    personal_number = personal_number or None
+    office_number = office_number or None
+    whatsapp = whatsapp or None
+    designation = designation or None
+    company_name = company_name or None
+    e_mail = e_mail or None
+    email2 = email2 or None
+    location = location or None
+    address = address or None
+    web_site = web_site or None
+    if web_site and not web_site.startswith(('http://', 'https://')):
+        web_site = f'https://{web_site}'
 
     try:
         contact_obj = ContactEntries.objects.get(id=id)
@@ -267,20 +308,48 @@ def edit_submit_contact(request):
 
         if profile_pic_file:
             contact_obj.profile_pic = profile_pic_file
-            contact_obj.profile_pic_thumbnail = profile_pic_file  
+            contact_obj.profile_pic_thumbnail = profile_pic_file
 
+        if business_card:
+            contact_obj.business_card = business_card
+
+        vcard = f"""BEGIN:VCARD
+VERSION:3.0
+N:{name};
+FN:{name}
+ORG:{company_name or ''}
+TEL;TYPE=HOME,VOICE:{personal_number or ''}
+EMAIL;TYPE=INTERNET,PREF:{e_mail or ''}
+END:VCARD"""
+
+        qr = segno.make(vcard)
+        buffer = io.BytesIO()
+        qr.save(buffer, kind='png', scale=10, border=4)
+        qr_filename = f"qr_{contact_obj.id}.png"
+
+        if contact_obj.qr_code:
+            contact_obj.qr_code.delete()
+
+        contact_obj.qr_code.save(qr_filename, ContentFile(buffer.getvalue()))
+
+        if profile_pic_file:
             contact_obj.save()
 
             profile_img = Image.open(contact_obj.profile_pic.path)
-            profile_img.resize((1000,1000))  
-            profile_img.save(contact_obj.profile_pic.path) 
+            profile_img.thumbnail((1000, 1000))
+            profile_img.save(contact_obj.profile_pic.path)
 
-        if business_card !=None:
-            contact_obj.business_card = business_card
+            profile_img_thumb = Image.open(contact_obj.profile_pic_thumbnail.path)
+            profile_img_thumb.thumbnail((80, 80))
+            profile_img_thumb.save(contact_obj.profile_pic_thumbnail.path)
 
         contact_obj.save()
 
-        return JsonResponse({"success": True, 'entry_id': contact_obj.id})
+        return JsonResponse({
+            "success": True,
+            'entry_id': contact_obj.id,
+            'qr_code_url': contact_obj.qr_code.url if contact_obj.qr_code else None
+        })
 
     except ContactEntries.DoesNotExist:
         return JsonResponse({'success': False, 'reason': 'Contact not found.'})
