@@ -86,39 +86,89 @@ def save_card_styles(request):
         card.save()
 
         return JsonResponse({'status': 'success'})
-
-
-
+    
 import base64
-def getVcard(request,slug):
+def getVcard(request, slug):
+    # Fetch the entry with prefetch for social media relationships
+    entry = ContactEntries.objects.filter(url_slug=slug).prefetch_related('social_medias').first()
+
+    name_parts = entry.name.strip().split()
+    first = name_parts[0] if len(name_parts) > 0 else ''
+    middle = ' '.join(name_parts[1:-1]) if len(name_parts) > 2 else ''
+    last = name_parts[-1] if len(name_parts) > 1 else ''
     
-    
-    entrie=ContactEntries.objects.filter(url_slug=slug).first()
-    
-    if entrie.profile_pic != '':
-        with open(entrie.profile_pic.path, "rb") as image_file:
-            
+    if not entry:
+        return HttpResponse("Contact not found.", status=404)
+
+    # Encode profile picture in base64
+    if entry.profile_pic:
+        with open(entry.profile_pic.path, "rb") as image_file:
             profile_pic_base64 = base64.b64encode(image_file.read()).decode("utf-8")
     else:
-        profile_pic_base64=''
-        
-        
-    vcard_data =f"""BEGIN:VCARD
-VERSION:3.0
-FN:{entrie.name}
-TEL;TYPE=cell:{entrie.personal_number}
-EMAIL:{entrie.email}
-TITLE:{entrie.designation}
-URL:{entrie.website}
-PHOTO;ENCODING=b;TYPE=JPEG:{profile_pic_base64}
-END:VCARD"""
+        profile_pic_base64 = ''
 
- 
+    # Collect social media links as individual "X-SOCIALPROFILE" fields
+    social_profiles = ''
+    for social in entry.social_medias.all():
+        platform = social.social_media.name  # e.g., Instagram, Facebook
+        link = social.link
+        social_profiles += f"X-SOCIALPROFILE;TYPE={platform}:{link}\n"
+
+    fax_line = f"TEL;TYPE=work,fax:{entry.fax_number}\n" if entry.fax_number else ""
+
+    # Prepare vCard content
+    vcard_data = f"""BEGIN:VCARD
+VERSION:3.0
+N:{last};{first};{middle};; 
+FN:{entry.name}
+TEL;TYPE=cell:{entry.personal_number}
+TEL;TYPE=work:{entry.office_number}
+{fax_line}EMAIL:{entry.email}
+URL:{entry.website}
+TITLE:{entry.designation}
+PHOTO;ENCODING=b;TYPE=JPEG:{profile_pic_base64}
+{social_profiles}END:VCARD"""
+
+    vcard_data = vcard_data.replace('\n', '\r\n')
+
     # Create a response with the vCard data
     response = HttpResponse(vcard_data, content_type='text/vcard')
-    response['Content-Disposition'] = f"""attachment; filename="{entrie.name} - contact.vcf"""
+    response['Content-Disposition'] = f'attachment; filename="{entry.name} - contact.vcf"'
 
     return response
+
+
+
+# import base64
+# def getVcard(request,slug):
+    
+    
+#     entrie=ContactEntries.objects.filter(url_slug=slug).first()
+    
+#     if entrie.profile_pic != '':
+#         with open(entrie.profile_pic.path, "rb") as image_file:
+            
+#             profile_pic_base64 = base64.b64encode(image_file.read()).decode("utf-8")
+#     else:
+#         profile_pic_base64=''
+        
+        
+#     vcard_data =f"""BEGIN:VCARD
+# VERSION:3.0
+# FN:{entrie.name}
+# TEL;TYPE=cell:{entrie.personal_number}
+# EMAIL:{entrie.email}
+# TITLE:{entrie.designation}
+# URL:{entrie.website}
+# PHOTO;ENCODING=b;TYPE=JPEG:{profile_pic_base64}
+# END:VCARD"""
+
+ 
+#     # Create a response with the vCard data
+#     response = HttpResponse(vcard_data, content_type='text/vcard')
+#     response['Content-Disposition'] = f"""attachment; filename="{entrie.name} - contact.vcf"""
+
+#     return response
 
 def demo_page(request):
     return render(request,'demo/index.html')
