@@ -58,13 +58,21 @@ class DashboardAPI(APIView):
 
         return Response(data)    
 
-class ContactsAPI(APIView):
-    permission_classes = [IsAuthenticated]
+class ContactsAPI(APIView): 
+    # permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        entries = ContactEntries.objects.filter(active=True,created_by__profile__organization=request.user.profile.organization).order_by('-id')
+    # def get(self, request, *args, **kwargs):
+    #     entries = ContactEntries.objects.filter(active=True,created_by__profile__organization=request.user.profile.organization).order_by('-id')
         
+    #     serializer = ContactEntriesSerializer(entries, many=True)
+    #     return Response({"entries": serializer.data}, status=200)
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            entries = ContactEntries.objects.filter(active=True,created_by__profile__organization=request.user.profile.organization).order_by('-id')
+        else:
+            entries = ContactEntries.objects.filter(active=True).order_by('-id')
         serializer = ContactEntriesSerializer(entries, many=True)
-        return Response({"entries": serializer.data}, status=200)
+        return Response({"entries": serializer.data}, status=status.HTTP_200_OK)
     
 
